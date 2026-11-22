@@ -1,0 +1,27 @@
+model = "wan2.2-ti2v-5b"
+pretrained_model_name_or_path = "Wan-AI/Wan2.2-TI2V-5B-Diffusers"
+manifest = "outputs/training/train.jsonl"
+output_dir = "runs/wan-ti2v-lora-sft"
+stage = "sft"
+tuning = "lora"
+batch_samples = 8
+epochs = 5
+max_updates = 1000
+learning_rate = 1e-5
+save_every = 100
+sharding = "none"
+max_sequence_length = 768
+
+[video]
+width = 512
+height = 512
+num_frames = 257
+fps = 16.0
+
+[flow_grpo]
+group_size = 4
+rollout_steps = 20
+noise_level = 0.7
+clip_range = 0.0001
+rollout_microbatch_size = 1
+trace_device = "cpu"

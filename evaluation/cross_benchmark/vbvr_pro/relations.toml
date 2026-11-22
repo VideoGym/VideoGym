@@ -1,0 +1,356 @@
+schema = "videogym.vbvr-relations"
+benchmark_revision = "fee09ecc6dcf78f44622cb7d80dc578e07ccf804"
+sft_revision = "cf242a25ed2a9d41b42f9f2ee804cf13089f867a"
+training_prompt_source = "https://huggingface.co/datasets/Video-Reason/VBVR-Pro-SFT-Video/raw/{sft_revision}/jsonl/{training_task}.jsonl"
+prompt_paraphrase_design = "Unpaired task-level Vision Prompt Paraphrase; alters visual symbols or output marking conventions (with corresponding prompt updates) without paired In-Domain questions."
+classification_rule = "Vision Prompt Paraphrase (prompt_paraphrase): task-level visual re-expression of a trained rule and answer operation; Extrapolation (extrapolation): transfer of a trained mechanism to changed scale, parameters, structures, predicates, or boundary conditions; Composition (composition): serial chaining or joint combination of independently trained rules through an intermediate state or non-redundant joint constraint; Cross-Task (cross_task): unseen task rule or solving objective. Selection followed by its answer mark, an explicit execution order, or a prompt-supplied intermediate answer is not a second rule. Categories are defined relative to VBVR-Pro's 250 training tasks from task contracts rather than model scores, and do not establish out-of-support parameters for every unpaired benchmark instance."
+
+[[tasks]]
+task = "G-135_select_next_figure_small_large_alternating_sequence_data-generator"
+category = "extrapolation"
+mechanism = "Size alternation"
+training_neighbors = ["G-134_select_next_figure_large_small_alternating_sequence_data-generator"]
+rationale = "The size-alternation rule and the SMALL starting phase already occur in training examples."
+
+[[tasks]]
+task = "G-136_locate_point_in_overlapping_area_data-generator"
+category = "extrapolation"
+mechanism = "Overlap-conditioned point selection"
+training_neighbors = ["G-137_identify_figure_in_overlapping_area_data-generator", "G-9_identify_objects_in_region_data-generator"]
+rationale = "Select points by membership in the already visible overlap. The intersection is present in the input, and circling expresses the selection; no constructed intermediate result is rebound to a second trained solver."
+
+[[tasks]]
+task = "G-140_locate_topmost_unobscured_figure_data-generator"
+category = "extrapolation"
+mechanism = "Visibility-conditioned shape selection"
+training_neighbors = ["G-21_multiple_occlusions_vertical_data-generator", "G-36_multiple_occlusions_horizontal_data-generator", "G-137_identify_figure_in_overlapping_area_data-generator", "G-9_identify_objects_in_region_data-generator"]
+rationale = "Select and outline an existing foreground shape using visibility as the predicate. Training already includes occlusion and region-based outline selection; visibility filtering and its answer outline form one selection mechanism."
+
+[[tasks]]
+task = "G-147_identify_unique_figure_in_uniform_set_data-generator"
+category = "extrapolation"
+mechanism = "Unique outlier detection"
+training_neighbors = ["T106_find_different_element-data-generator", "G-138_spot_unique_non_repeated_color_data-generator"]
+rationale = "T106 already requires finding the unique different shape; this task changes the layout and shape differences."
+
+[[tasks]]
+task = "G-160_circle_largest_numerical_value_data-generator"
+category = "extrapolation"
+mechanism = "Numerical maximum selection"
+training_neighbors = ["G-200_circle_maximum_value_data-generator"]
+rationale = "Both tasks compare numbers and circle the maximum; the number count and layout change."
+
+[[tasks]]
+task = "G-161_mark_second_largest_shape_data-generator"
+category = "extrapolation"
+mechanism = "Size ordering and rank selection"
+training_neighbors = ["G-19_sort_objects_by_rule_data-generator", "G-3_stable_sort_data-generator"]
+rationale = "Use the known size-order relation to select the second-largest object, preserving the comparison and ordering mechanism."
+
+[[tasks]]
+task = "G-167_select_longest_polygon_side_data-generator"
+category = "extrapolation"
+mechanism = "Length-based edge selection"
+training_neighbors = ["G-19_sort_objects_by_rule_data-generator", "T065_perpendicular_bisector_option_identification-data-generator"]
+rationale = "Select an existing edge by maximum length and mark it at its midpoint. The midpoint specifies where to place the answer mark; the contract does not require executing a midpoint-construction subtask on a generated intermediate structure."
+
+[[tasks]]
+task = "G-168_identify_nearest_to_square_rectangle_data-generator"
+category = "extrapolation"
+mechanism = "Aspect-ratio proximity"
+training_neighbors = ["G-195_select_nearest_2_1_rectangle_data-generator"]
+rationale = "Preserve aspect-ratio selection while changing the target ratio from 2:1 to 1:1."
+
+[[tasks]]
+task = "G-169_locate_intersection_of_segments_data-generator"
+category = "extrapolation"
+mechanism = "Segment-intersection localization"
+training_neighbors = ["G-199_locate_line_intersections_data-generator"]
+rationale = "Training marks all intersections; this task restricts the target to one intersection."
+
+[[tasks]]
+task = "G-174_arrange_circles_by_circumference_data-generator"
+category = "extrapolation"
+mechanism = "Descending size ordering"
+training_neighbors = ["G-19_sort_objects_by_rule_data-generator"]
+rationale = "Ordering circles by circumference is equivalent to ordering by radius; object shapes and counts change."
+
+[[tasks]]
+task = "G-189_draw_midpoint_perpendicular_line_data-generator"
+category = "extrapolation"
+mechanism = "Perpendicular construction through a selected point"
+training_neighbors = ["T060_circle_midpoint_identification-data-generator", "T064_perpendicular_line_through_circle-data-generator", "T065_perpendicular_bisector_option_identification-data-generator"]
+rationale = "The candidate points and parallel lines are given in the input. Selecting the mid-height point changes the anchor predicate of the trained perpendicular-through-point construction; it does not construct a new midpoint for a second solver."
+
+[[tasks]]
+task = "G-193_draw_next_sized_shape_data-generator"
+category = "extrapolation"
+mechanism = "Patterned sequence completion"
+training_neighbors = ["G-134_select_next_figure_large_small_alternating_sequence_data-generator", "O-45_sequence_completion_data-generator", "T121_rotation_pattern_prediction-data-generator"]
+rationale = "Preserve sequence-rule inference and successor generation while changing the size cycle and output form."
+
+[[tasks]]
+task = "G-202_mark_wave_peaks_data-generator"
+category = "extrapolation"
+mechanism = "Extremum comparison"
+training_neighbors = ["G-29_chart_extreme_with_data_data-generator", "G-30_chart_extreme_without_data_data-generator"]
+rationale = "Extend global extrema in charts to local extrema in waveforms; the core operation remains comparison within a numerical neighborhood."
+
+[[tasks]]
+task = "G-206_identify_pentagons_data-generator"
+category = "extrapolation"
+mechanism = "Polygon-category recognition"
+training_neighbors = ["G-141_identify_polygon_with_most_sides_data-generator", "G-146_circle_all_squares_from_mixed_shapes_data-generator"]
+rationale = "Preserve side-count or geometric-category recognition and circling, changing the target category to pentagons."
+
+[[tasks]]
+task = "G-212_find_incorrect_arrow_direction_data-generator"
+category = "extrapolation"
+mechanism = "Directional outlier detection"
+training_neighbors = ["G-138_spot_unique_non_repeated_color_data-generator", "T106_find_different_element-data-generator", "G-31_directed_graph_navigation_data-generator"]
+rationale = "Preserve direction understanding and unique-outlier detection, changing the property to relative direction around a circle."
+
+[[tasks]]
+task = "G-217_circle_central_dot_data-generator"
+category = "extrapolation"
+mechanism = "Counting and ordinal selection"
+training_neighbors = ["O-33_counting_object_data-generator", "O-37_light_sequence_data-generator"]
+rationale = "Preserve object counting and ordinal position selection, with the target position defined as the middle item by count."
+
+[[tasks]]
+task = "G-218_identify_largest_angle_in_triangle_data-generator"
+category = "extrapolation"
+mechanism = "Geometric attribute comparison"
+training_neighbors = ["G-198_mark_right_angled_triangles_data-generator", "T069_right_triangle_vertex_identification-data-generator", "G-19_sort_objects_by_rule_data-generator"]
+rationale = "Apply geometric angle recognition and comparison to the vertex with the largest angle."
+
+[[tasks]]
+task = "G-219_select_leftmost_shape_data-generator"
+category = "extrapolation"
+mechanism = "Positional extremum selection"
+training_neighbors = ["G-9_identify_objects_in_region_data-generator", "T099_space_invaders_shooting_timing-data-generator"]
+rationale = "Preserve spatial-position selection; T099 training instructions already explicitly use leftmost as a target condition."
+
+[[tasks]]
+task = "G-221_outline_innermost_square_data-generator"
+category = "extrapolation"
+mechanism = "Nested-region localization"
+training_neighbors = ["T044_nested_pentagon_center_target-data-generator", "G-194_construct_concentric_ring_data-generator"]
+rationale = "T044 already locates the innermost region; this task outlines the innermost square."
+
+[[tasks]]
+task = "G-222_mark_tangent_point_of_circles_data-generator"
+category = "extrapolation"
+mechanism = "Tangency localization"
+training_neighbors = ["G-165_mark_tangent_point_after_motion_data-generator", "T055_tangent_point_identification-data-generator"]
+rationale = "Training already locates tangency points; this task performs the same geometric localization on static tangent circles."
+
+[[tasks]]
+task = "G-223_highlight_horizontal_lines_data-generator"
+category = "prompt_paraphrase"
+mechanism = "Horizontal-direction recognition"
+training_neighbors = ["G-166_highlight_horizontal_lines_data-generator"]
+rationale = "The horizontal-line predicate and circling action are unchanged; black replaces red as the output marking convention."
+
+[[tasks]]
+task = "G-240_add_borders_to_unbordered_shapes_data-generator"
+category = "extrapolation"
+mechanism = "Attribute filtering and local outline tracing"
+training_neighbors = ["G-4_identify_objects_data-generator", "G-138_spot_unique_non_repeated_color_data-generator", "O-10_shape_outline_fill_data-generator"]
+rationale = "Preserve attribute-based object localization and tracing, replacing color or style conditions with the presence of a border."
+
+[[tasks]]
+task = "G-247_identify_chinese_character_data-generator"
+category = "extrapolation"
+mechanism = "Character recognition"
+training_neighbors = ["T114_recognize_numbers_letters_scene-data-generator", "G-163_identify_one_and_nine_data-generator"]
+rationale = "Preserve character recognition and category localization while extending the character set to Chinese characters."
+
+[[tasks]]
+task = "G-248_mark_asymmetrical_shape_data-generator"
+category = "extrapolation"
+mechanism = "Shape symmetry and outlier detection"
+training_neighbors = ["G-37_symmetry_random_data-generator", "G-38_symmetry_shape_data-generator", "T106_find_different_element-data-generator"]
+rationale = "Symmetric-shape relations and outlier detection both occur in training; the test emphasizes shape asymmetry."
+
+[[tasks]]
+task = "G-24_separate_objects_no_spin_data-generator"
+category = "extrapolation"
+mechanism = "Translational shape alignment"
+training_neighbors = ["G-25_seperate_object_spinning_data-generator"]
+rationale = "Use the translation-alignment mechanism from a trained rotate-then-translate task, omitting its rotation stage."
+
+[[tasks]]
+task = "G-250_color_triple_intersection_red_data-generator"
+category = "extrapolation"
+mechanism = "Geometric-region intersection"
+training_neighbors = ["G-137_identify_figure_in_overlapping_area_data-generator"]
+rationale = "Preserve intersection detection while increasing the number of participating shapes from two to three."
+
+[[tasks]]
+task = "G-273_high_density_liquid_data-generator"
+category = "cross_task"
+mechanism = "Density-based floating and sinking"
+training_neighbors = ["O-75_communicating_vessels_data-generator", "O-87_fluid_diffusion_reasoning_data-generator"]
+rationale = "The nearest training tasks concern liquid-level equalization and fluid diffusion. This objective requires comparing object and fluid densities to determine floating or sinking."
+
+[[tasks]]
+task = "G-47_multiple_keys_for_one_door_data-generator"
+category = "composition"
+mechanism = "Key collection and route optimization"
+training_neighbors = ["G-45_key_door_matching_data-generator", "G-46_find_keys_and_open_doors_data-generator", "G-18_grid_shortest_path_data-generator"]
+rationale = "Combine trained key collection and shortest-path mechanisms to optimize the visit order through all keys before reaching the door."
+
+[[tasks]]
+task = "G-54_connecting_color_data-generator"
+category = "extrapolation"
+mechanism = "Same-color non-crossing connection"
+training_neighbors = ["T074_same_color_curve_connection-data-generator", "G-15_grid_avoid_obstacles_data-generator", "T115_lines_observation-data-generator"]
+rationale = "T115 already draws paired routes without crossing other colors, and T074 connects same-color endpoints. Smooth curves and shape obstacles vary this familiar connection mechanism; non-crossing is not a new binding of independent rules."
+
+[[tasks]]
+task = "O-11_shape_color_then_move_data-generator"
+category = "extrapolation"
+mechanism = "Two-stage analogy slot pairing"
+training_neighbors = ["O-12_shape_color_then_scale_data-generator", "O-13_shape_outline_then_move_data-generator", "O-7_shape_color_change_data-generator"]
+rationale = "Preserve the trained two-row analogy template while pairing first-slot recoloring from O-12 with second-slot vertical translation from O-13, where the exemplar row directly exhibits each slot's target attribute."
+
+[[tasks]]
+task = "O-22_construction_stack_data-generator"
+category = "extrapolation"
+mechanism = "Top-of-stack transfer and target-stack planning"
+training_neighbors = ["T133_hanoi-data-generator", "G-33_visual_jenga_data-generator"]
+rationale = "Preserve the transition rule that only the top object may move, together with stack planning, while changing target stacks and constraints."
+
+[[tasks]]
+task = "O-27_move_2_object_to_2_target_data-generator"
+category = "prompt_paraphrase"
+mechanism = "Synchronous target alignment"
+training_neighbors = ["G-5_multi_object_placement_data-generator", "G-25_seperate_object_spinning_data-generator"]
+rationale = "Matching targets are redrawn as colored outlines instead of stars. One-to-one matching, shortest straight paths, and simultaneous arrival are preserved."
+
+[[tasks]]
+task = "O-2_pigment_color_mixing_subtractive_data-generator"
+category = "extrapolation"
+mechanism = "Channel-wise multiplicative color mixing"
+training_neighbors = ["O-17_color_subtraction_data-generator"]
+rationale = "The actual O-17 training prompt explicitly specifies round(c1*c2/255), the same color-mixing operation as this task."
+
+[[tasks]]
+task = "O-39_maze_data-generator"
+category = "extrapolation"
+mechanism = "Maze routing"
+training_neighbors = ["G-15_grid_avoid_obstacles_data-generator", "G-18_grid_shortest_path_data-generator", "T001_maze_shortest_path_start_to_goal-data-generator", "T002_maze_shortest_path_horizontal_vertical-data-generator"]
+rationale = "Find a route under the same adjacency and wall constraints, with changed grids and wall layouts."
+
+[[tasks]]
+task = "O-43_object_subtraction_data-generator"
+category = "extrapolation"
+mechanism = "Target-object selection and removal"
+training_neighbors = ["G-4_identify_objects_data-generator", "G-33_visual_jenga_data-generator"]
+rationale = "Preserve category-based object selection and local removal, changing the target category to cubes."
+
+[[tasks]]
+task = "O-46_shape_sorter_data-generator"
+category = "extrapolation"
+mechanism = "Ordered shape-matching placement"
+training_neighbors = ["T036_shape_to_hole_matching-data-generator", "T037_multi_piece_shape_fit-data-generator", "G-34_object_packing_data-generator"]
+rationale = "T036 and T037 already place shapes into matching holes, while G-34 specifies one-at-a-time placement in an explicit color order. The supplied order changes execution scheduling, without requiring a new intermediate-state inference or jointly solved rule."
+
+[[tasks]]
+task = "O-49_symmetry_completion_data-generator"
+category = "extrapolation"
+mechanism = "Reflection completion"
+training_neighbors = ["G-37_symmetry_random_data-generator", "G-38_symmetry_shape_data-generator", "T025_vertical_symmetry_reflection-data-generator"]
+rationale = "Preserve mirror completion about a vertical axis while changing the pattern and grid layout."
+
+[[tasks]]
+task = "O-54_control_panel_data-generator"
+category = "extrapolation"
+mechanism = "Discrete mapping induction and lookup"
+training_neighbors = ["T049_circle_cluster_pattern_completion-data-generator", "T050_dot_grid_size_pattern_completion-data-generator", "O-7_shape_color_change_data-generator"]
+rationale = "Preserve induction of a discrete attribute mapping from visible pairs, replacing color or size mappings with lever-position to light-color mappings."
+
+[[tasks]]
+task = "O-56_raven_data-generator"
+category = "extrapolation"
+mechanism = "Two-dimensional pattern completion"
+training_neighbors = ["T109_2d_pattern_completion-data-generator", "T121_rotation_pattern_prediction-data-generator", "T124_logic_patterns_completion-data-generator", "O-45_sequence_completion_data-generator"]
+rationale = "Training already includes completion of two-dimensional patterns and logical rules; the test uses new matrix rules and patterns."
+
+[[tasks]]
+task = "O-58_symbol_delete_data-generator"
+category = "composition"
+mechanism = "Symbol deletion and stable compaction"
+training_neighbors = ["O-4_symbol_substitution_data-generator", "O-3_symbol_reordering_data-generator", "T081_zuma_color_match_elimination-data-generator"]
+rationale = "Delete the target, then compact the surviving sequence into the newly created gap. The rearrangement consumes the deletion result; retaining the target or leaving the gap violates the output contract. Training contains symbol editing and positional rearrangement separately."
+
+[[tasks]]
+task = "O-59_symbol_insert_data-generator"
+category = "composition"
+mechanism = "Making space and inserting a symbol"
+training_neighbors = ["O-3_symbol_reordering_data-generator", "O-4_symbol_substitution_data-generator", "T081_zuma_color_match_elimination-data-generator"]
+rationale = "Shift existing symbols to construct an empty slot, then insert the specified symbol into that slot. The insertion consumes the space made by rearrangement; omitting either stage violates the output contract. Training contains positional rearrangement and symbol generation separately."
+
+[[tasks]]
+task = "O-5_symbol_deletion_data-generator"
+category = "extrapolation"
+mechanism = "Specified-symbol deletion"
+training_neighbors = ["O-4_symbol_substitution_data-generator", "T081_zuma_color_match_elimination-data-generator"]
+rationale = "Preserve local editing or removal of a specified symbol, omitting the new-symbol generation required by replacement."
+
+[[tasks]]
+task = "O-60_symbol_substitute_data-generator"
+category = "prompt_paraphrase"
+mechanism = "In-place symbol replacement"
+training_neighbors = ["O-4_symbol_substitution_data-generator"]
+rationale = "The same single-position substitution is specified by an ordinal and reference panel instead of a red target box; symbol appearance and the corresponding language change."
+
+[[tasks]]
+task = "O-61_symbol_edit_data-generator"
+category = "composition"
+mechanism = "Repeated space-making and symbol insertion"
+training_neighbors = ["O-3_symbol_reordering_data-generator", "O-4_symbol_substitution_data-generator", "T081_zuma_color_match_elimination-data-generator"]
+rationale = "Repeatedly shift the suffix rightward to open empty slots and insert the specified symbol into each slot, with each subsequent insertion acting on the shifted intermediate sequence. Omitting either space-making rearrangement or symbol generation violates the output contract; training contains positional rearrangement and in-place substitution separately."
+
+[[tasks]]
+task = "O-62_gravity_physics_data-generator"
+category = "cross_task"
+mechanism = "Gravity and inelastic bouncing"
+training_neighbors = ["O-15_ball_bounces_given_time_data-generator", "G-48_multiple_bounces_data-generator", "O-87_fluid_diffusion_reasoning_data-generator"]
+rationale = "Nearby trained boundary-reflection tasks do not include this task's gravitational acceleration, collision dissipation, or continuous velocity-arrow updates."
+
+[[tasks]]
+task = "O-64_animal_matching_data-generator"
+category = "prompt_paraphrase"
+mechanism = "Shape matching and synchronous movement"
+training_neighbors = ["G-5_multi_object_placement_data-generator", "G-25_seperate_object_spinning_data-generator", "T036_shape_to_hole_matching-data-generator"]
+rationale = "Animal faces and their silhouettes replace geometric objects and target markers, preserving one-to-one matching, shortest straight paths, and simultaneous arrival."
+
+[[tasks]]
+task = "O-65_animal_size_sorting_data-generator"
+category = "prompt_paraphrase"
+mechanism = "Size ordering"
+training_neighbors = ["G-19_sort_objects_by_rule_data-generator", "O-66_animal_color_sorting_data-generator"]
+rationale = "Animal faces and a bottom baseline re-express size sorting. Both sort directions occur in G-19, whose 2--5 object support covers the five benchmark instances (3, 3, 4, 5, 5 objects)."
+
+[[tasks]]
+task = "O-6_2d_geometric_transformation_data-generator"
+category = "extrapolation"
+mechanism = "Planar rotation alignment"
+training_neighbors = ["O-8_shape_rotation_data-generator", "G-25_seperate_object_spinning_data-generator", "O-44_rotation_puzzle_data-generator"]
+rationale = "Preserve rotation and target-orientation alignment, with an explicit center and rotation direction."
+
+[[tasks]]
+task = "O-85_2d_object_rotation_data-generator"
+category = "extrapolation"
+mechanism = "Planar rigid rotation"
+training_neighbors = ["O-8_shape_rotation_data-generator", "G-25_seperate_object_spinning_data-generator"]
+rationale = "Preserve rotation, with an explicitly given angle and multiple objects each rotating about their own centroid."
+
+[[tasks]]
+task = "O-9_shape_scaling_data-generator"
+category = "extrapolation"
+mechanism = "Scaling analogy"
+training_neighbors = ["O-12_shape_color_then_scale_data-generator", "O-14_shape_scale_then_outline_data-generator", "G-6_resize_object_data-generator"]
+rationale = "Preserve inference and execution of an existing scaling mapping, testing the scaling stage on its own."

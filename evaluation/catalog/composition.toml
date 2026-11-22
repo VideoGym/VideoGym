@@ -1,0 +1,44 @@
+[catalog]
+tracks = ["composition"]
+tasks = [
+  "ancestor_subtree_diameter_composition",
+  "bridge_arrow_composition",
+  "bridge_conveyor_composition",
+  "candy_gravity_composition",
+  "collision_reflection_composition",
+  "crane_reverse_composition",
+  "dock_reverse_composition",
+  "fold_rotate_composition",
+  "gravity_candy_composition",
+  "growth_color_composition",
+  "invert_midpoint_composition",
+  "life_rowtable_composition",
+  "life_xor_composition",
+  "life_xor_life_composition",
+  "locked_trade_composition",
+  "midpoint_bisector_composition",
+  "midpoint_parallel_composition",
+  "midpoint_reflect_rotate_composition",
+  "midpoint_rotate_composition",
+  "polygon_color_composition",
+  "portal_arrow_composition",
+  "portal_conveyor_composition",
+  "program_max_capture_composition",
+  "project_midpoint_composition",
+  "project_rotate_composition",
+  "queens_akari_composition",
+  "queens_regions_composition",
+  "reflect_midpoint_composition",
+  "reflect_rotate_composition",
+  "rotate_midpoint_composition",
+  "rotate_parallel_composition",
+  "size_color_composition",
+  "subtree_leaves_composition",
+  "xor_life_composition",
+]
+
+[sampling]
+seed = 20261027
+count_per_task = 5
+max_attempts = 200
+workers = 8

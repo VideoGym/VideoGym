@@ -1,0 +1,54 @@
+.venv/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.egg-info/
+dist/
+build/
+.eggs/
+*.so
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.pdf
+
+# Output & Checkpoints
+outputs/
+output/
+reports/
+checkpoints/
+*.safetensors
+*.pth
+*.pt
+
+# Data & Score Artifacts
+dataset/
+*.csv
+*.json
+*.jsonl
+!data/common/task_groups.json
+!evaluation/cross_benchmark/vbvr_pro/benchmark/tasks.json
+!tests/**/*.json
+
+# Video Artifacts
+*.mp4
+*.webm
+!tests/**/*.webm
+!docs/media/**/*.mp4
+
+# Logs
+*.log
+wandb/
+tensorboard/
+runs/
+
+# OS & Local Environment
+.DS_Store
+Thumbs.db
+._*
+.env
+.env.*

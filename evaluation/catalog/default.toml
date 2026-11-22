@@ -1,0 +1,10 @@
+# Default task catalog. Pass --tracks id for the 246-task In-Domain suite,
+# or use extrapolation.toml / composition.toml / cross_task.toml for OOD suites.
+[catalog]
+tracks = ["id", "extrapolation", "composition", "cross_task"]
+
+[sampling]
+count_per_task = 5
+seed = 20261008
+max_attempts = 200
+workers = 4

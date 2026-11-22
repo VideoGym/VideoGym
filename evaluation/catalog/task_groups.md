@@ -1,0 +1,27 @@
+# Single-Step Group and Multi-Step Group
+
+Task groups classify the visual execution structure defined by each task's rules and required video output. A task in the `Single-Step Group` marks a fixed answer or construction on an unchanging puzzle scene, or applies one simultaneous state update. A task in the `Multi-Step Group` executes sequential state transitions or chained transformations where each stage updates the visual state for the next.
+
+A step is a semantic operation or committed system update rather than a video frame, drawing stroke, opacity transition, or internal solver iteration. One synchronous update may involve constraint propagation, arbitration, or multiple local calculations before committing, and parallel operations share a single step when they do not consume one another's updated results. Rollout templates that specify successive updates belong to the `Multi-Step Group` even when an individual instance terminates after one step.
+
+[task_groups.json](../../data/common/task_groups.json) defines membership for all 413 task templates and the `ext_ray_reflect` evaluation override (414 entries total):
+
+- **In-Domain (`id`)**: 132 `Single-Step Group` and 114 `Multi-Step Group` tasks across 11 families.
+- **Prompt Paraphrase**: 132 `Single-Step Group` and 114 `Multi-Step Group` tasks on `Text Prompt Paraphrase` (246 tasks); 19 `Single-Step Group` and 14 `Multi-Step Group` tasks on `Vision Prompt Paraphrase` (33 tasks).
+- **Extrapolation**: 25 `Single-Step Group` and 27 `Multi-Step Group` tasks across 29 Scale and 23 Mechanism tasks. `ray_reflect` executes a single reflection in-domain (`Single-Step Group`), whereas `ext_ray_reflect` chains four successive reflections (`Multi-Step Group`); the remaining extrapolation tasks share their source task's group. Matched-source comparisons pair each source task under its target evaluation task's group.
+- **Composition**: 14 `Single-Step Group` and 20 `Multi-Step Group` tasks according to each combined rule contract.
+- **Cross-Task**: 23 `Single-Step Group` and 10 `Multi-Step Group` tasks.
+- **VBVR-Pro Bench**: 67 `Single-Step Group` and 33 `Multi-Step Group` tasks (26 / 24 on in-domain tasks and 41 / 9 on out-of-domain tasks).
+
+## Boundary Examples
+
+- **Transformations**: `rotation`, `point_rotation`, and `object_subtraction` apply one operation (`Single-Step Group`). `double_rotation`, `double_reflection`, `glide_reflection`, `translation_composition`, `paper_fold_hole_matrix`, `cube_net_fold`, and `polycube_rotation` chain ordered transformations (`Multi-Step Group`).
+- **Synchronous vs. chained updates**: `grid_shift`, `diffusion_limited_aggregation`, `elevator_dispatch_tick`, `packet_router_tick`, `rail_signal_interlocking`, `simultaneous_agent_conflict`, `candy_crush_special_predict`, and `gear_train_direction` commit one synchronous update (`Single-Step Group`). `mirror_aim_detector` and `layered_refraction` propagate a ray sequentially across successive interfaces (`Multi-Step Group`).
+- **Constraint systems vs. frontier rollouts**: Constraint Grid tasks, `hex_chain_count`, `connected_components`, and `grid_component` annotate a single fixed solution (`Single-Step Group`). `binary_matrix`, `grid_bfs`, `legend_operator_program`, `rotate_matrix`, and `spiral_matrix` advance working or frontier state across ordered steps (`Multi-Step Group`).
+- **Board and scheduling outputs**: `go_max_capture_search` places a stone and then removes captured stones as distinct board states (`Multi-Step Group`), whereas `othello_endgame`, `jobshop_schedule`, and `causal_counterfactual` output a single target configuration or static assignment (`Single-Step Group`). Time-indexed state sequences such as `hidden_markov_path`, `delayed_wave_superposition`, and `joint_robot_exchange` encode successive system states (`Multi-Step Group`).
+- **Composition**: The 14 `Single-Step Group` compositions (`ancestor_subtree_diameter`, `subtree_leaves`, `size_color`, `growth_color`, `polygon_color`, `queens_regions`, `queens_akari`, `midpoint_bisector`, `midpoint_parallel`, `midpoint_rotate`, `rotate_midpoint`, `reflect_midpoint`, `project_midpoint`, and `invert_midpoint`) render one combined target answer or a single construction stroke on an unchanging scene (`midpoint` adds no construction mark). The 20 `Multi-Step Group` compositions—including two-stroke geometric chains (`rotate_parallel`, `reflect_rotate`, `project_rotate`, and `midpoint_reflect_rotate`), multi-step navigation, staged rearrangement, clear-and-gravity cascades, cellular-automaton sequences, Go program capture, collision-reflection trajectories, and 3D fold-then-rotate—execute ordered visual stages across frames.
+- **VBVR-Pro Bench**: Direct answer construction, single deletions or substitutions (`O-5`), single rigid rotations, density endpoint assignments (`G-273`), and simultaneous merges (`O-16`) belong to the `Single-Step Group`. Chained operations (`O-11` through `O-14`), two-stage shifts (`O-36`), delete-then-compact sequences (`O-58`), navigation, cascades, and recurrent simulations belong to the `Multi-Step Group`.
+
+## Group Aggregation
+
+Group metrics are question-weighted sums over their member tasks (`correct / samples`), conserving family and benchmark denominators. Paired comparisons aggregate source and target question counts within each target group, and per-group histograms record the distribution of task-level pass counts from `0` through `samples`.

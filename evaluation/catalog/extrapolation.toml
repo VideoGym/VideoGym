@@ -1,0 +1,63 @@
+# 52 source tasks, one intervention per task: 29 Scale + 23 Mechanism.
+[catalog]
+tracks = ["extrapolation"]
+tasks = [
+  "ext_bookshelf_sort_by_height",
+  "ext_bridge_drop_tile",
+  "ext_carry_capacity_2",
+  "ext_closest_pair",
+  "ext_color_matched_collection",
+  "ext_container_ship_loading_order",
+  "ext_convex_hull_count",
+  "ext_conveyor_belt_path",
+  "ext_crane_block_stack",
+  "ext_directional_arrow_entry",
+  "ext_go_rule_simulator",
+  "ext_grid_bfs",
+  "ext_jewel2_future_board",
+  "ext_lattice_points_strict_inside",
+  "ext_leaf_count",
+  "ext_legend_operator_program",
+  "ext_light_up_akari_completion",
+  "ext_lightsout_single_press",
+  "ext_maze_square",
+  "ext_nqueens_completion",
+  "ext_pancake_flip",
+  "ext_path_between_nodes",
+  "ext_polycube_rotation",
+  "ext_ray_reflect",
+  "ext_shikaku_completion",
+  "ext_snake_path",
+  "ext_sokoban",
+  "ext_symmetry_completion",
+  "ext_tower_of_hanoi",
+  "mechanism_arc_center",
+  "mechanism_balance_comparison",
+  "mechanism_circle_inversion",
+  "mechanism_closest_common_ancestor",
+  "mechanism_count_intersection_points",
+  "mechanism_cyclic_threshold_wave",
+  "mechanism_diagonal_intersection",
+  "mechanism_double_reflection",
+  "mechanism_elastic_collision_track",
+  "mechanism_elevator_dispatch_tick",
+  "mechanism_external_tangent_point",
+  "mechanism_growing_polygon_step",
+  "mechanism_homothety_center",
+  "mechanism_increasing_size_sequence",
+  "mechanism_lifelike_rule_rollout",
+  "mechanism_linear_sequence_next",
+  "mechanism_protocol_handshake_tick",
+  "mechanism_region_count",
+  "mechanism_rule_table_1d_rollout",
+  "mechanism_sandpile_avalanche",
+  "mechanism_spiral_continuation",
+  "mechanism_spiral_similarity_center",
+  "mechanism_tangent_circle_touch",
+]
+
+[sampling]
+seed = 20261027
+count_per_task = 5
+max_attempts = 200
+workers = 8

@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "videogym"
+version = "0.1.0"
+description = "VideoGym: procedural task synthesis, post-training, full-video verification, and seven-level generalization evaluation for video generation models"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.0.2,<3",
+    "opencv-python-headless>=4.13.0.92,<6",
+    "Pillow>=10.4.0,<13",
+    "scipy>=1.13,<2",
+    "imageio>=2.37,<3",
+    "imageio-ffmpeg>=0.6,<1",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+training = [
+    "torch>=2.6,<3",
+    "diffusers>=0.41,<0.42",
+    "transformers>=5.0,<6",
+    "accelerate>=1.15,<2",
+    "huggingface-hub>=0.25,<2",
+    "peft>=0.21,<0.22",
+    "safetensors>=0.7,<1",
+    "sentencepiece>=0.2,<1",
+    "einops>=0.8,<1",
+    "ftfy>=6.2,<7",
+]
+
+[project.urls]
+Homepage = "https://videogym.github.io/VideoGym/"
+Repository = "https://github.com/VideoGym/VideoGym"
+
+[project.scripts]
+videogym = "cli:main"
+
+[tool.setuptools]
+include-package-data = false
+py-modules = ["cli"]
+
+[tool.setuptools.packages.find]
+include = ["data*", "evaluation*", "inference*", "training*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"data.common" = ["task_groups.json"]
+"data.common.assets.fonts" = ["*.ttf", "*.txt"]
+"training.configuration" = ["presets/*.toml"]
+"evaluation.catalog" = ["*.toml"]
+"evaluation.cross_benchmark.vbvr_pro" = ["*.toml", "NOTICE.md"]
+"evaluation.cross_benchmark.vbvr_pro.benchmark" = ["tasks.json"]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]

@@ -1,0 +1,9 @@
+# All 33 independent designs; ID counts determine family quotas only.
+[catalog]
+tracks = ["cross_task"]
+
+[sampling]
+seed = 20261027
+count_per_task = 5
+max_attempts = 200
+workers = 8
