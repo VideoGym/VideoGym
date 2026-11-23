@@ -337,7 +337,7 @@
                 </div>
                 <strong>7-Level Benchmark</strong>
                 <div class="pipe-stat">3,720 Questions</div>
-                <p>744 task entries separating <em>Within Familiar</em> robustness from <em>Beyond Familiar</em> reasoning.</p>
+                <p>744 level-by-task entries separating <em>Within Familiar</em> robustness from <em>Beyond Familiar</em> reasoning.</p>
               </div>
 
               <div class="pipe-step">
@@ -626,7 +626,7 @@
                     </tr>
                     <tr>
                       <td class="nowrap"><strong>VideoGym-LTX-2.3</strong></td>
-                      <td class="nowrap">Fixed Length (81f)</td>
+                      <td class="nowrap">Fixed Length (81 frames)</td>
                       <td class="num">32.20%</td>
                       <td class="num">47.58%</td>
                       <td class="num danger-num"><strong>14.39%</strong></td>
@@ -926,7 +926,7 @@
         <section id="transfer" class="doc-section">
           <div class="reading-col">
             <div class="section-heading">
-              <span class="eyebrow">Section 4.4 &middot; Cross-Model &amp; Cross-Benchmark Boundary</span>
+              <span class="eyebrow">Section 4.4 &amp; Appendix C.3 &middot; Cross-Task, External Models &amp; Metric Audit</span>
               <h2>External SFT &amp; RLVR Models Hit the Exact Same Cliff</h2>
               <p>
                 On held-out <strong>Cross-Task</strong> rules, VideoGym-LTX-2.3 scores <strong>0.61%</strong>
@@ -1104,9 +1104,10 @@
                 </table>
               </div>
               <p class="table-caption-note">
-                Reference Length pass@1. Each post-trained model is evaluated relative to its own training set
-                (VideoGym-Test for VideoGym-LTX-2.3; VBVR-Pro Bench for VBVR-Pro models), with Cross-Benchmark testing
-                transfer to the other benchmark. <sup>&dagger;</sup>Unpaired visual variants in VBVR-Pro Bench.
+                Reference Length pass@1; parentheses report (passed / total questions). Each post-trained model is
+                evaluated relative to its own training set (VideoGym-Test for VideoGym-LTX-2.3; VBVR-Pro Bench for
+                VBVR-Pro models), with Cross-Benchmark testing transfer to the other benchmark.
+                <sup>&dagger;</sup>Unpaired visual variants in VBVR-Pro Bench.
               </p>
             </div>
 

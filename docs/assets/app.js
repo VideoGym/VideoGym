@@ -1068,7 +1068,7 @@
             </select>
           </div>
           <input type="range" class="ls-scrubber" data-ls-act="scrub" min="0" max="24" step="1" value="0" aria-label="Synchronized frame scrubber" />
-          <span class="ls-readout" data-ls-readout>0.00 s &middot; f0</span>
+          <span class="ls-readout" data-ls-readout>Frame 1 / 25</span>
         </div>
       `;
 
@@ -1106,7 +1106,7 @@
         currentFrame = clamped;
         scrubber.max = String(maxIdx);
         scrubber.value = String(clamped);
-        readout.textContent = `${(clamped / 16).toFixed(2)} s · f${clamped}/${maxIdx}`;
+        readout.textContent = `Frame ${clamped + 1} / ${maxIdx + 1}`;
       };
 
       const ensureSourcesLoaded = () => {

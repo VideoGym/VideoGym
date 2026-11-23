@@ -16,7 +16,7 @@
     );
 
   const NOTES = {
-    all: "Browse all 744 evaluation task entries across seven generalization levels; click any card to inspect its initial puzzle image, self-contained rule prompt, reference video, and paired source task(s).",
+    all: "Browse all 744 level-by-task benchmark entries across seven generalization levels (246 In-Domain + 246 Text Paraphrase + 33 Vision Paraphrase + 52 Extrapolation + 34 Composition + 33 Cross-Task + 100 Cross-Benchmark; 5 questions each = 3,720 questions). Click any card to inspect its initial image, rule prompt, reference video, and paired source task(s).",
     id: "Unseen problem instances within trained task rules and parameter ranges (246 tasks, 1,230 questions).",
     prompt_paraphrase_text:
       "Synonymous instruction rewrites on the exact same 1,230 In-Domain images, rules, answers, and reference lengths.",
@@ -268,7 +268,7 @@
         const maxIdx = getMaxIdx();
         const clamped = Math.min(maxIdx, Math.max(0, Math.round(fIdx)));
         sharedFrame = clamped;
-        readout.textContent = `${(clamped / 16).toFixed(2)} s (f${clamped})`;
+        readout.textContent = `Frame ${clamped + 1} / ${maxIdx + 1}`;
         slider.max = String(maxIdx);
         slider.value = String(clamped);
       };
@@ -453,7 +453,7 @@
                   </select>
                 </label>
                 <input type="range" class="sync-slider" data-act="seek" min="0" max="${initialMaxIdx}" step="1" value="0" aria-label="Shared frame timeline" />
-                <span class="time-readout" data-readout>0.00 s (f0)</span>
+                <span class="time-readout" data-readout>Frame 1 / ${initialMaxIdx + 1}</span>
               </div>
               <div class="video-grid">${videosHtml}</div>
               <div class="case-bottom-bar">
@@ -753,17 +753,15 @@
         return `<div class="td-media-card"><div class="td-card-head"><strong>${esc(titleLabel)}</strong></div><div class="td-square-frame"><span class="td-muted">No reference video</span></div></div>`;
       }
       const fps = sample.fps || 16;
-      const durStr = Number.isFinite(sample.duration)
-        ? `${sample.duration.toFixed(2)}s`
-        : `${((sample.frames || 0) / fps).toFixed(2)}s`;
+      const totalF = Number(sample.frames) || 0;
       return `
         <div class="td-media-card" data-video-unit>
           <div class="td-card-head">
             <strong>${esc(titleLabel)}</strong>
-            <span>${esc(sample.frames || 0)}f &middot; ${esc(durStr)} @ ${esc(fps)} FPS</span>
+            <span>${esc(totalF)} frames @ ${esc(fps)} FPS</span>
           </div>
           <div class="td-square-frame">
-            <video data-td-video data-fps="${esc(fps)}" controls muted playsinline preload="metadata" poster="${esc(sample.image || "")}" src="${esc(sample.video)}"></video>
+            <video data-td-video data-fps="${esc(fps)}" data-frames="${esc(totalF)}" controls muted playsinline preload="metadata" poster="${esc(sample.image || "")}" src="${esc(sample.video)}"></video>
           </div>
           <div class="td-video-controls">
             <div class="td-step-btns">
@@ -778,7 +776,7 @@
                 <option value="2">2&times;</option>
               </select>
             </div>
-            <span class="td-time-readout" data-vreadout>0.00s (f0)</span>
+            <span class="td-time-readout" data-vreadout>Frame 1${totalF ? ` / ${esc(totalF)}` : ""}</span>
           </div>
         </div>`;
     }
@@ -808,11 +806,14 @@
         const video = unit.querySelector("[data-td-video]");
         if (!video) return;
         const fps = Number(video.dataset.fps) || 16;
+        const totalF = Number(video.dataset.frames) || 0;
         const readout = unit.querySelector("[data-vreadout]");
         const updateReadout = () => {
           const cur = video.currentTime || 0;
+          const idx1 = Math.max(1, Math.round(cur * fps) + 1);
+          const clamped1 = totalF > 0 ? Math.min(totalF, idx1) : idx1;
           if (readout) {
-            readout.textContent = `${cur.toFixed(2)}s (f${Math.round(cur * fps)})`;
+            readout.textContent = totalF > 0 ? `Frame ${clamped1} / ${totalF}` : `Frame ${clamped1}`;
           }
         };
         video.addEventListener("timeupdate", updateReadout);
@@ -858,7 +859,7 @@
             </div>
             <div class="td-hero-grid">
               ${renderImageBox(srcSample, "Source Image (I₀)", `${displayName(id)} source input`)}
-              ${renderVideoBox(srcSample, "Source GT Video")}
+              ${renderVideoBox(srcSample, "Source Reference Video")}
               <div class="td-spec-card">
                 <div class="td-badges">
                   <span class="badge">In-Domain Source</span>
@@ -893,7 +894,7 @@
               </div>
               <div class="td-constituent-media">
                 ${renderImageBox(srcSample, "Source I₀", `${displayName(id)} input`)}
-                ${renderVideoBox(srcSample, "Source GT Video")}
+                ${renderVideoBox(srcSample, "Source Reference Video")}
               </div>
               <p class="td-constituent-logic">${esc(srcTask?.logic || srcTask?.design_intent || "")}</p>
             </div>`;

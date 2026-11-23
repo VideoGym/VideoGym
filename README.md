@@ -67,7 +67,7 @@ VideoGym divides its 246 In-Domain tasks across 11 task families into two groups
   <sub><b>Figure 2. Representative In-Domain Tasks in VideoGym.</b> Each column shows the input image <i>I</i><sub>0</sub> (top) and two ground-truth reference keyframes (mid-video and solved final state). <b>Single-Step Group (left)</b> marks one fixed answer on an unchanging scene: <i>N-Queens</i> places one non-attacking queen per open row, and <i>Eulerian Trail</i> traces every edge once from the green start node to the red goal node. <b>Multi-Step Group (right)</b> executes sequential state updates where each move alters the scene for the next: <i>Sokoban</i> moves the yellow agent to push the brown box onto the green target, <i>Rush Hour</i> slides blocking cars along their axes so the red car exits right, and <i>Cube Net Folding</i> folds five numbered flaps upward one crease at a time onto the blue base into a closed cube.</sub>
 </p>
 
-Group membership across all seven levels (414 task entries) is recorded in [`data/common/task_groups.json`](data/common/task_groups.json) and documented in [`evaluation/catalog/task_groups.md`](evaluation/catalog/task_groups.md).
+Group membership across all seven levels (414 unique task templates and overrides covering all 744 level-by-task benchmark entries) is recorded in [`data/common/task_groups.json`](data/common/task_groups.json) and documented in [`evaluation/catalog/task_groups.md`](evaluation/catalog/task_groups.md).
 
 <div style="overflow-x: auto;">
 
@@ -78,9 +78,9 @@ Group membership across all seven levels (414 task entries) is recorded in [`dat
 | **Spatial&nbsp;Navigation** | 0 | 31 | **31** | Mazes, keys/locks, bridges, portals, conveyors, and resource routing |
 | **Rearrangement&nbsp;Game** | 0 | 23 | **23** | Bookshelf sorting, Hanoi, pancake flips, crane stacks, and buffer queues |
 | **In&#8209;Context&nbsp;Learning** | 16 | 3 | **19** | Visual analogies, attribute progressions, set operations, and matrix rules |
-| **Graph&nbsp;Theory** | 17 | 0 | **17** | Shortest paths, tree diameter, LCA, bridges, Eulerian trails, bipartiteness |
+| **Graph&nbsp;Theory** | 17 | 0 | **17** | Shortest paths, tree diameter, common ancestors, bridges, Eulerian trails, bipartiteness |
 | **Dynamics&nbsp;Game** | 1 | 13 | **14** | Sokoban, Breakout, Snake, match-clear cascades, and Lemmings rollouts |
-| **Constraint&nbsp;Grid** | 13 | 0 | **13** | N-Queens, Star Battle, Akari, Slitherlink, Shikaku, Nurikabe, Masyu, Yin–Yang |
+| **Constraint&nbsp;Grid** | 13 | 0 | **13** | N-Queens, Star Battle, Akari, Slitherlink, Shikaku, Nurikabe, Masyu, Yin-Yang |
 | **Board&nbsp;Game** | 1 | 7 | **8** | Go capture search, Mancala, Gomoku, Lights Out, and knight tours |
 | **Physics** | 1 | 6 | **7** | Multi-mirror ray tracing, elastic collisions, spill cascades, and gear trains |
 | **Spatial&nbsp;3D** | 3 | 3 | **6** | Cube-net folding, polycube rotations, orthographic views, and cross-sections |
@@ -173,16 +173,18 @@ Evaluating **VideoGym-LTX-2.3** against all three base models (`LTX-2.3`, `Wan2.
 
 <div style="overflow-x: auto;">
 
-| Level | Duration | Qs | Overall | Single&#8209;Step | Multi&#8209;Step |
+| Level | Duration | Questions | Overall | Single&#8209;Step | Multi&#8209;Step |
 | :--- | :--- | ---: | ---: | ---: | ---: |
-| Base&nbsp;Models&nbsp;(all&nbsp;3) | Ref.&nbsp;/&nbsp;81f | 3,220 | 0.00% | 0.00% | 0.00% |
-| In&#8209;Domain | Fixed&nbsp;(81f) | 1,230 | 32.20% | 47.58% | 14.39% |
-| **In&#8209;Domain** | **Ref.&nbsp;Length** | 1,230 | **56.34%** | **70.45%** | **40.00%** |
-| Text&nbsp;Prompt&nbsp;Paraphrase | Ref.&nbsp;Length | 1,230 | 52.60% | 65.15% | 38.07% |
-| Vision&nbsp;Prompt&nbsp;Paraphrase | Ref.&nbsp;Length | 165 | 28.48% | 49.47% | **0.00%** |
-| Extrapolation | Ref.&nbsp;Length | 260 | 25.77% | 52.00% | **1.48%** |
+| Base&nbsp;Models&nbsp;(all&nbsp;3) | Reference&nbsp;Length<sup>*</sup> | 3,220 | 0.00% | 0.00% | 0.00% |
+| In&#8209;Domain | Fixed&nbsp;Length&nbsp;(81&nbsp;frames) | 1,230 | 32.20% | 47.58% | 14.39% |
+| **In&#8209;Domain** | **Reference&nbsp;Length** | 1,230 | **56.34%** | **70.45%** | **40.00%** |
+| Text&nbsp;Prompt&nbsp;Paraphrase | Reference&nbsp;Length | 1,230 | 52.60% | 65.15% | 38.07% |
+| Vision&nbsp;Prompt&nbsp;Paraphrase | Reference&nbsp;Length | 165 | 28.48% | 49.47% | **0.00%** |
+| Extrapolation | Reference&nbsp;Length | 260 | 25.77% | 52.00% | **1.48%** |
 
 </div>
+
+<sub><sup>*</sup>All three base models also score 0.00% across all 1,230 Fixed Length (81-frame) In-Domain questions.</sub>
 
 - **Duration sensitivity (`Fixed Length` vs. `Reference Length`):** Because a Video DiT presets output frame count and denoises all frames jointly, switching from Reference Length to Fixed Length (81 frames) drops In-Domain pass rate from 56.34% to 32.20% and doubles invalid-process rejections among final-state passes (21.07% → 44.23%), triggering multi-object shortcuts when 81 frames is too short and post-solution over-painting when 81 frames is too long (widening from 15.0 to 24.1 pp across epochs 2–10).
 - **Text robustness vs. visual symbol dependence (`Prompt Paraphrase`):** Synonymous rewrites retain 90.76% of solved In-Domain questions via frozen Gemma 3 language priors (60.00% vs. 60.61% on the 33-task matched subset), whereas redrawing visual symbols (`Vision Prompt Paraphrase`) drops to **0.00%** across all 14 Multi-Step Group tasks because the frozen pixel-level Video VAE and Video DiT fail to bind unfamiliar symbols to trained rules across sequential steps.
@@ -207,11 +209,11 @@ Evaluating **VideoGym-LTX-2.3** against all three base models (`LTX-2.3`, `Wan2.
 
 ### 2. Beyond Familiar Task Patterns: Collapse on Rule Composition, Unseen Tasks & External SFT/RLVR
 
-`Composition` tests 2–3 rules already taught in `VideoGym-Train` on the exact same native canvas under strict ablation non-degeneracy (removing any constituent rule alters the valid answer). Multiplying constituent In-Domain pass rates per task predicts **60.8%** (∏<i>p<sub>i</sub></i>) under independent rule execution, yet post-trained `VideoGym-LTX-2.3` collapses across both groups even when every constituent task reaches **100%** In-Domain accuracy (across both 5 and 20 questions per task):
+`Composition` combines 2–3 rules taught only in separate `VideoGym-Train` tasks on the same native canvas, so valid solutions must obey all combined rules (removing any constituent rule alters the valid answer). Multiplying constituent In-Domain pass rates per task predicts **60.8%** (∏<i>p<sub>i</sub></i>) under independent rule execution, yet post-trained `VideoGym-LTX-2.3` collapses across both groups even when every constituent task reaches **100%** In-Domain accuracy (across both 5 and 20 questions per task):
 
 <div style="overflow-x: auto;">
 
-| Constituent&nbsp;Filter | Qs | Overall | Single&#8209;Step | Multi&#8209;Step |
+| Constituent&nbsp;Filter | Questions | Overall | Single&#8209;Step | Multi&#8209;Step |
 | :--- | ---: | ---: | ---: | ---: |
 | All&nbsp;Tasks&nbsp;(5&nbsp;questions/task) | 170 | **0.59%** | 0.00% | 1.00% |
 | Constituents&nbsp;≥&nbsp;80% | 110 | **0.91%** | 0.00% | 2.00% |
@@ -292,7 +294,7 @@ To verify whether different backbones, 5× per-task data scale, or RLVR shift th
 </table>
 </div>
 
-<sub>Reference Length pass@1. Rows above Cross-Benchmark evaluate each model relative to its own training set (VideoGym-Test vs. VBVR-Pro Bench); Cross-Benchmark tests transfer to the other suite. <sup>†</sup>Unpaired task-level visual variants in VBVR-Pro Bench.</sub>
+<sub>Reference Length pass@1; parentheses report (passed / total questions). Rows above Cross-Benchmark evaluate each model relative to its own training set (VideoGym-Test vs. VBVR-Pro Bench); Cross-Benchmark tests transfer to the other suite. <sup>†</sup>Unpaired task-level visual variants in VBVR-Pro Bench.</sub>
 
 - **Isolated trajectory templates rather than composable rules (`Composition`):** At 20 questions per task, **30 of 34** Composition tasks score 0% (7 of 10 on 100%-solved constituents), and even the nine passing videos across all 680 rollouts come from unactivated second rules, isolated single-question hits, or a single downward-conveyor layout.
 - **Universal cliff on unseen rules (`Cross-Task` & external SFT/RLVR):** `VideoGym-LTX-2.3` scores **0.61%** on unseen rules in the same 11 categories (0.15% at 20 questions per task via a single center-cell shortcut, with 32 of 33 tasks at 0%). Likewise, 91.94% and 96.55% of VBVR-Pro A14B and 5B RLVR's out-of-domain passes come from `Extrapolation`, while **both score 0.00% on `Composition` and `Cross-Task`**, and symbol/convention differences cap `Cross-Benchmark` transfer at 0.99%–4.60%.
@@ -393,7 +395,7 @@ videogym benchmark generate \
   --count-per-task 5 --output-root <in-domain-package>
 videogym benchmark audit --dataset <in-domain-package>
 
-# 3. Optional: generate a separate 20/task robustness-audit expansion from a 5/task package
+# 3. Optional: expand a 5-question-per-task package to 20 questions per task
 videogym benchmark generate \
   --training-profile <training-profile.json> \
   --config evaluation/catalog/composition.toml \
