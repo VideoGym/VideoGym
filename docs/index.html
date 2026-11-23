@@ -143,10 +143,10 @@
               <div class="tldr-box">
                 <div class="tldr-label">Short Answer</div>
                 <p>
-                  <strong>No&mdash;not through current post-training.</strong> Open-weights base video models start at
+                  <strong>No, not through current post-training.</strong> Open-weights base video models start at
                   <strong>0.00%</strong> on zero-shot visual reasoning. Post-training (SFT and RLVR) improves accuracy
-                  <em>within familiar task patterns</em>&mdash;mainly when drawing one static answer on an unchanging
-                  scene&mdash;yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>, failing
+                  <em>within familiar task patterns</em> (mainly when drawing one static answer on an unchanging
+                  scene), yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>, failing
                   both to combine rules already mastered separately and to solve new rules in the same categories.
                   Post-trained video models replay familiar solution templates and remain
                   <strong>visual renderers</strong> rather than <strong>visual reasoners</strong>.
@@ -633,7 +633,7 @@
               <p>
                 Unlike an LLM that generates until emitting a stop token, a video diffusion model denoises a preset
                 frame canvas all at once. Instead of moving slightly faster or holding a solved board still under
-                <strong>Fixed Length (81 frames, 5 s)</strong>, the model memorizes training pace&mdash;triggering
+                <strong>Fixed Length (81 frames, 5 s)</strong>, the model memorizes training pace, triggering
                 illegal multi-object shortcuts when 81f is shorter and post-solution over-painting when 81f is longer,
                 with the Multi-Step duration gap widening fivefold across Epochs 2&ndash;10 (from 5.09 to 25.61 pp).
               </p>
@@ -737,7 +737,7 @@
               </div>
               <figcaption>
                 <strong>Figure 4. Text vs. Vision Prompt Paraphrase on Matched Problems.</strong>
-                (a) In a Multi-Step maze, synonymous text rewrites succeed, whereas redrawing walls as rail links on
+                (a) In a Multi-Step maze, synonymous text rewrites succeed, whereas redrawing the walled maze as rail links on
                 the same grid causes an illegal off-path shortcut (0.00% across all Multi-Step tasks). (b) Marking one
                 static shortest path in the Single-Step Group transfers across redrawn terminals (49.47%).
               </figcaption>
@@ -832,7 +832,7 @@
               <h3>3. Composition: Mastered Rules Fail to Combine Across Both Groups</h3>
               <p>
                 When a puzzle requires applying two or three rules that were each mastered in separate training tasks,
-                accuracy collapses across <em>both</em> Single-Step and Multi-Step Groups&mdash;proving that
+                accuracy collapses across <em>both</em> Single-Step and Multi-Step Groups, proving that
                 post-training stores isolated task templates rather than composable rules:
               </p>
             </div>

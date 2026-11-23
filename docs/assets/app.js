@@ -194,7 +194,7 @@
           label: "Prompt Paraphrase",
           caseId: "01_paper_figures__08_fig4a_square_maze_paraphrase",
           finding:
-            "Matched Square Maze: synonymous Text Prompt Paraphrase transfers cleanly (90.8% retained), whereas redrawing walls as rail links collapses to 0.00% (0/70) across all 14 Multi-Step tasks.",
+            "Matched Square Maze: synonymous Text Prompt Paraphrase transfers cleanly (90.8% retained), whereas redrawing the walled maze as rail links collapses to 0.00% (0/70) across all 14 Multi-Step tasks.",
           panes: [
             {
               title: "In-Domain",
@@ -243,7 +243,7 @@
           label: "Extrapolation",
           caseId: "04_within_familiar_patterns__03_extrap_multistep_scale_bridge_drop",
           finding:
-            "Scale Extrapolation (Bridge Drop, 7×7 → 14×14): placing 2 bridges scores 5/5 In-Domain, yet scaling to 5 water rows extrudes planks across dry floor and misses goal G (0/5; 0/80 across 20/20 MS sources).",
+            "Scale Extrapolation (Bridge Drop, 7×7 → 14×14): placing 2 bridges scores 5/5 In-Domain, yet scaling to 5 water rows erases start S, recolors the agent, miscounts the bridge gauge, and extrudes a brown plank strip across dry floor on the way to G (0/5; 0/80 across 20/20 MS sources).",
           panes: [
             {
               title: "7×7 In-Domain",
@@ -273,7 +273,7 @@
               src: "media/showcase/04_within_familiar_patterns/03_extrap_multistep_scale_bridge_drop/extrapolation_rollout_FAIL.mp4",
               poster: "media/showcase/04_within_familiar_patterns/03_extrap_multistep_scale_bridge_drop/input_extrapolation.png",
               frames: 33,
-              note: "Extrudes plank strip across land; misses G.",
+              note: "Reaches G, but extrudes planks on dry land and miscounts pips.",
             },
           ],
         },
@@ -292,7 +292,7 @@
               src: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/constituent_1_PASS.mp4",
               poster: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/input_constituent_1.png",
               frames: 21,
-              note: "Obeys leftward conveyor push cleanly.",
+              note: "Obeys left-then-up conveyor pushes cleanly.",
             },
             {
               title: "Rule B (Bridge)",
@@ -302,7 +302,7 @@
               src: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/constituent_2_PASS.mp4",
               poster: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/input_constituent_2.png",
               frames: 21,
-              note: "Drops bridge tile across water cleanly.",
+              note: "Drops two bridge tiles across water cleanly.",
             },
             {
               title: "Combined Reference",
@@ -351,7 +351,7 @@
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/02_crosstask_minimum_arborescence/videogym_ltx23_FAIL.mp4",
               poster: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/02_crosstask_minimum_arborescence/input.png",
               frames: 33,
-              note: "Marks conflicting incoming edges; leaves nodes isolated.",
+              note: "Two edges enter 1; leaves 2–5 unreachable (5 isolated).",
             },
           ],
         },
@@ -445,7 +445,7 @@
           label: "Epochs 2 → 10 vs. 81f",
           caseId: "03_epoch_and_duration_dynamics__01_multistep_epochs_2_to_10_ref_vs_fixed",
           finding:
-            "Cooperative Open Door across Epochs 2 → 10: Reference Length converges to clean button–door coordination by Epoch 6–10, while Epoch 10 at Fixed 81f duplicates the orange agent.",
+            "Cooperative Open Door across Epochs 2 → 10: Reference Length converges from early tile and move errors (Epochs 2–4) to clean execution by Epochs 6–10, while Epoch 10 at Fixed 81f opens the door early and duplicates agents.",
           panes: [
             {
               title: "Epoch 2 · Ref.",
@@ -455,7 +455,7 @@
               src: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/epoch02_ref.mp4",
               poster: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/input.png",
               frames: 25,
-              note: "Early training fails door coordination.",
+              note: "Opens door but spawns block at (2, 4).",
             },
             {
               title: "Epoch 6 · Ref.",
@@ -465,7 +465,7 @@
               src: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/epoch06_ref.mp4",
               poster: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/input.png",
               frames: 25,
-              note: "Valid button hold and passage emerge.",
+              note: "Valid plate press and passage emerge.",
             },
             {
               title: "Epoch 10 · Ref.",
@@ -485,7 +485,7 @@
               src: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/epoch10_fixed81f.mp4",
               poster: "media/showcase/03_epoch_and_duration_dynamics/01_multistep_epochs_2_to_10_ref_vs_fixed/input.png",
               frames: 81,
-              note: "Reaches flag after duplicating orange agent.",
+              note: "Opens door early; duplicates agents before flag.",
             },
           ],
         },
@@ -580,7 +580,7 @@
               src: "media/showcase/01_paper_figures/14_fig6b_polygon_color_composition/constituent_2_PASS.mp4",
               poster: "media/showcase/01_paper_figures/14_fig6b_polygon_color_composition/input_constituent_2.png",
               frames: 25,
-              note: "Continues period-3 color cycle.",
+              note: "Continues period-4 color cycle.",
             },
             {
               title: "Combined Reference",
@@ -773,7 +773,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/03_vbvr_crosstask_collapse_gravity_physics/vbvr_5b_rlvr.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/03_vbvr_crosstask_collapse_gravity_physics/input.png",
               frames: 192,
-              note: "Ball vanishes mid-fall before ground.",
+              note: "Hits ground and sinks through floor; no bounce.",
             },
           ],
         },
@@ -802,7 +802,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/vbvr_a14b.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/input.png",
               frames: 60,
-              note: "Solves trained maze convention.",
+              note: "Solves trained grid convention.",
             },
             {
               title: "VBVR-Pro 5B RLVR",
@@ -812,7 +812,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/vbvr_5b_rlvr.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/input.png",
               frames: 60,
-              note: "Solves trained maze convention.",
+              note: "Solves trained grid convention.",
             },
             {
               title: "VideoGym-LTX-2.3",
@@ -822,7 +822,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/videogym_ltx23_crossbench.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/01_vbvr_in_domain_shortest_path/input.png",
               frames: 60,
-              note: "Replays red-trail detour convention.",
+              note: "Draws red trail along a long detour.",
             },
           ],
         },
@@ -831,7 +831,7 @@
           label: "Cross-Bench: VideoGym Task",
           caseId: "06_external_sft_rlvr_and_cross_benchmark__04_videogym_in_domain_shortest_path",
           finding:
-            "On VideoGym-Test's Graph Shortest Path, VideoGym-LTX-2.3 passes cleanly (5/5), whereas Cross-Benchmark VBVR-Pro A14B (1.77% overall) and 5B RLVR (0.99%) paint over vertex labels or stall (0/5).",
+            "On VideoGym-Test's Graph Shortest Path, VideoGym-LTX-2.3 passes cleanly (5/5), whereas Cross-Benchmark VBVR-Pro A14B (1.77% overall) cuts across vertex interiors and 5B RLVR (0.99%) colors only one edge (0/5).",
           panes: [
             {
               title: "VideoGym Ref.",
@@ -861,7 +861,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/vbvr_a14b_crossbench_FAIL.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/input.png",
               frames: 41,
-              note: "Paints strokes over node labels 7 & 1.",
+              note: "Cuts strokes across node labels 7, 1 & 9.",
             },
             {
               title: "VBVR-Pro 5B RLVR",
@@ -871,7 +871,7 @@
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/vbvr_5b_rlvr_crossbench_FAIL.mp4",
               poster: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/input.png",
               frames: 41,
-              note: "Draws one backward stub from 9 and stalls.",
+              note: "Colors only the final edge 1 → 9; skips 5 → 7 → 1.",
             },
           ],
         },
