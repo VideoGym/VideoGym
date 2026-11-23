@@ -670,16 +670,16 @@
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 3. Post-Trained Duration Sensitivity: Memorizing Training Pace Instead of Flexible Step Control.</strong>
-                We compare post-trained VideoGym-LTX-2.3 given each problem&rsquo;s true solution length
+                <strong>Figure 3. Post-Training Across Epochs and Sensitivity to Preset Frame Count.</strong>
+                We evaluate post-trained VideoGym-LTX-2.3 given each problem&rsquo;s true solution length
                 (<em>Reference Length</em>) versus a fixed 81-frame budget (<em>Fixed Length</em>).
                 <strong>(a)</strong> Across Epochs 2&ndash;10, longer training widens the In-Domain gap to +24.1 pp as
-                the model increasingly fits training-video pace, while Composition and Cross-Task stay near 0%.
-                <strong>(b)</strong> Post-trained rollouts on the exact same <em>I</em><sub>0</sub>: when 81 frames is
-                shorter than needed (<em>Inbox Priority Sort</em>: stack cards 5 &rarr; 1 one top card at a time), the
-                model illegally lifts two cards together; when 81 frames is longer than needed
-                (<em>Symmetry Completion</em>: reflect green cells across the red axis and hold still), it finishes
-                mirroring early and then paints four extra cells.
+                the model increasingly fits training-video pace, while Extrapolation plateaus after Epoch 4 and
+                Composition/Cross-Task stay near 0%. <strong>(b)</strong> Paired post-trained rollouts on the exact same
+                <em>I</em><sub>0</sub>: when 81 frames is shorter than needed (<em>Inbox Priority Sort</em>: stack cards
+                5 &rarr; 1 one top card at a time), the model illegally lifts two cards together; when 81 frames is
+                longer than needed (<em>Symmetry Completion</em>: reflect green cells across the red axis and hold
+                still), it finishes mirroring early and then paints four extra cells.
               </figcaption>
             </figure>
           </div>
