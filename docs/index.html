@@ -166,19 +166,19 @@
                   <div class="metric-kicker">Post-Trained In-Domain</div>
                   <div class="metric-val is-blue">56.34%</div>
                   <div class="metric-bar"><span style="--w: 56.34%" class="fill-blue"></span></div>
-                  <div class="metric-sub">70.5% Single &middot; 40.0% Multi</div>
+                  <div class="metric-sub">VideoGym-LTX-2.3: 70.5% Single &middot; 40.0% Multi</div>
                 </div>
                 <div class="metric-tile is-red">
                   <div class="metric-kicker">Rule Composition</div>
                   <div class="metric-val is-red">0.59%</div>
                   <div class="metric-bar"><span style="--w: 1.5%" class="fill-red"></span></div>
-                  <div class="metric-sub">1.67% on 100%-solved rules &middot; 0% RLVR</div>
+                  <div class="metric-sub">1.67% on 100%-solved rules &middot; 0% SFT/RLVR</div>
                 </div>
                 <div class="metric-tile is-red">
                   <div class="metric-kicker">Cross-Task Transfer</div>
                   <div class="metric-val is-red">0.61%</div>
                   <div class="metric-bar"><span style="--w: 1.5%" class="fill-red"></span></div>
-                  <div class="metric-sub">Unseen rules in same categories &middot; 0% RLVR</div>
+                  <div class="metric-sub">Unseen rules in same categories &middot; 0% SFT/RLVR</div>
                 </div>
               </div>
             </div>
@@ -453,7 +453,7 @@
                       <th>Generalization Level</th>
                       <th class="num">Tasks</th>
                       <th class="num">Questions</th>
-                      <th class="num">Single / Multi</th>
+                      <th class="num">Single / Multi Tasks</th>
                       <th>What Changes Relative to VideoGym-Train</th>
                     </tr>
                   </thead>
@@ -974,7 +974,7 @@
                         <div class="cbar-col"><span class="cbar-val is-rlvr">4.0%</span><div class="cbar-track"><i style="height: 6.5%" class="sw-rlvr"></i></div></div>
                       </div>
                       <div class="cliff-gname">Vision Paraphrase</div>
-                      <div class="cliff-gsub">Text: 52.6% VideoGym</div>
+                      <div class="cliff-gsub">Text Paraphrase: 52.6%</div>
                     </div>
 
                     <div class="cliff-group">
@@ -985,7 +985,7 @@
                         <div class="cbar-col"><span class="cbar-val is-rlvr">14.4%</span><div class="cbar-track"><i style="height: 23.2%" class="sw-rlvr"></i></div></div>
                       </div>
                       <div class="cliff-gname">Extrapolation</div>
-                      <div class="cliff-gsub">&gt;91% of VBVR OOD</div>
+                      <div class="cliff-gsub">&gt;91% of VBVR-Pro OOD passes</div>
                     </div>
                   </div>
                 </div>
@@ -1112,6 +1112,42 @@
 
             <!-- Live Synchronized Stage: External SFT & RLVR Rollouts -->
             <div class="live-stage" data-live-stage="transfer"></div>
+
+            <div class="prose">
+              <h3>Why Prior Loose Metrics Reported Higher Out-of-Domain Scores</h3>
+              <p>
+                Prior studies reported higher out-of-domain scores (35&ndash;70 out of 100) for two reasons: first,
+                coarse out-of-domain splits are dominated by familiar-pattern Extrapolation (39 of 50 out-of-domain
+                tasks in VBVR-Pro Bench, versus only 4 Composition and 2 Cross-Task tasks); second, final-state-only and
+                continuous [0, 100] partial-credit evaluators reward static backgrounds and illegal shortcuts. On
+                VideoGym-Test, <strong>94.74%</strong> of Composition final-state passes violate intermediate rules
+                (100% confirmed wrong by blinded human audit); across all 1,500 Reference Length post-trained VBVR-Pro
+                Bench videos, <strong>47.20%</strong> scored &ge;80 and <strong>29.57%</strong> awarded a perfect
+                100/100 fail full-video verification:
+              </p>
+            </div>
+
+            <figure class="paper-figure" data-zoomable-fig>
+              <div class="fig-img-wrap">
+                <img
+                  src="assets/figures/fig7_scoring.png"
+                  alt="Figure 7: Comparison of final-state and continuous partial-credit metrics against full-video verification on post-trained model rollouts"
+                  loading="lazy"
+                />
+                <span class="fig-zoom-hint">Click to enlarge</span>
+              </div>
+              <figcaption>
+                <strong>Figure 7. Why Loose Metrics Mistake Post-Trained Shortcuts for Reasoning.</strong>
+                <strong>(a)</strong> On VideoGym Composition (<em>Portal + Conveyor</em>), post-trained VideoGym-LTX-2.3
+                spawns two duplicate agents mid-video yet lands on G in the final frame. <strong>(b)</strong> On
+                VBVR-Pro Bench (<em>Majority Color</em>), post-trained VBVR-Pro 5B RLVR leaves a pink square unremoved
+                in the top-left corner yet receives 100.0/100 because unremoved pixels under 15% of total minority-color
+                area still get full credit. <strong>(c)</strong> Splitting post-trained VideoGym-LTX-2.3 final-state
+                passes (total bar length) into full-video passes and invalid-process videos (parentheses: invalid share
+                of final-state passes). <strong>(d)</strong> Full-video verification failure rates across VBVR-Pro
+                continuous-score cutoffs.
+              </figcaption>
+            </figure>
 
             <!-- Visual Explorer Gateway Card -->
             <div class="explorer-gateway">
