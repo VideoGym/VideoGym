@@ -141,14 +141,15 @@
           <div class="reading-col">
             <div class="tldr-shell">
               <div class="tldr-box">
-                <div class="tldr-label">Short Answer</div>
+                <div class="tldr-label">Main Conclusion</div>
                 <p>
-                  <strong>No, not through current post-training.</strong> Open-weights base video models start at
-                  <strong>0.00%</strong> on zero-shot visual reasoning. Post-training (SFT and RLVR) improves accuracy
-                  <em>within familiar task patterns</em> (mainly when drawing one static answer on an unchanging
-                  scene), yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>, failing
-                  both to combine rules already mastered separately and to solve new rules in the same categories.
-                  Post-trained video models replay familiar solution templates and remain
+                  Post-training current video generation models, which lack sufficient pretraining for visual
+                  reasoning, cannot teach them <strong>generalizable reasoning</strong>. Open-weights base video models
+                  start at <strong>0.00%</strong> on zero-shot visual reasoning. Post-training (SFT and RLVR) improves
+                  accuracy <em>within familiar task patterns</em> (mainly when marking one static answer on an
+                  unchanging scene), yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>,
+                  failing both to combine mastered rules and to solve unseen rules in the same categories. Instead of
+                  learning to reason, post-trained models replay familiar solution templates and remain
                   <strong>visual renderers</strong> rather than <strong>visual reasoners</strong>.
                 </p>
               </div>
@@ -158,7 +159,7 @@
                   <div class="metric-kicker">Zero-Shot Base (3 Models)</div>
                   <div class="metric-val is-muted">0.00%</div>
                   <div class="metric-bar"><span style="--w: 0.6%" class="fill-muted"></span></div>
-                  <div class="metric-sub">0 / 3,220 VideoGym-Test pass@1</div>
+                  <div class="metric-sub">Across 3,220 VideoGym-Test pass@1</div>
                 </div>
                 <div class="metric-tile is-blue">
                   <div class="metric-kicker">Post-Trained In-Domain</div>
@@ -170,13 +171,13 @@
                   <div class="metric-kicker">Rule Composition</div>
                   <div class="metric-val is-red">0.59%</div>
                   <div class="metric-bar"><span style="--w: 1.5%" class="fill-red"></span></div>
-                  <div class="metric-sub">1 / 170 main &middot; 30/34 at 0/20</div>
+                  <div class="metric-sub">1.67% on 100%-solved rules &middot; 0% RLVR</div>
                 </div>
                 <div class="metric-tile is-red">
                   <div class="metric-kicker">Cross-Task Transfer</div>
                   <div class="metric-val is-red">0.61%</div>
                   <div class="metric-bar"><span style="--w: 1.5%" class="fill-red"></span></div>
-                  <div class="metric-sub">1 / 165 main &middot; 0% on RLVR</div>
+                  <div class="metric-sub">Unseen rules in same categories &middot; 0% RLVR</div>
                 </div>
               </div>
             </div>
@@ -267,10 +268,16 @@
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 1. VideoGym and Seven Levels of Generalization.</strong>
-                Open-weights base video models start near 0% across all levels. Post-training on 246 tasks yields
-                strong gains <em>within familiar task patterns</em> (concentrated in the Single-Step Group) yet drops
-                near 0% <em>beyond familiar task patterns</em> on both Composition and Cross-Task.
+                <strong>Figure 1. VideoGym Overview and Main Results.</strong>
+                <strong>(Top)</strong> Given an initial image <em>I</em><sub>0</sub> and rules, a model generates a full
+                solution video across seven generalization levels: <em>within familiar task patterns</em> evaluates
+                unseen instances of trained tasks (<em>In-Domain</em>), synonymous prompt rewrites
+                (<em>Text Paraphrase</em>), redrawn symbols with identical structure (<em>Vision Paraphrase</em>), and
+                larger scale or boundary cases (<em>Extrapolation</em>); <em>beyond familiar task patterns</em> combines
+                separately learned rules (<em>Composition</em>), introduces unseen rules in the same categories
+                (<em>Cross-Task</em>), and transfers to VBVR-Pro Bench (<em>Cross-Benchmark</em>).
+                <strong>(Bottom)</strong> Reference Length pass rates of post-trained VideoGym-LTX-2.3 versus three base
+                models (dashed: 0.00% on VideoGym-Test, &le;1.00% on VBVR-Pro Bench).
               </figcaption>
             </figure>
           </div>
@@ -414,9 +421,16 @@
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 2. Representative In-Domain Tasks Across Task Groups.</strong>
-                Single-Step Group tasks (left) overlay one solved construction onto a fixed board or graph, whereas
-                Multi-Step Group tasks (right) update intermediate board or 3D states step by step across frames.
+                <strong>Figure 2. Representative In-Domain Tasks in VideoGym.</strong>
+                Each column shows the input image <em>I</em><sub>0</sub> (top) and two ground-truth reference keyframes
+                (mid-video and solved final state). <strong>Single-Step Group (left)</strong> marks one fixed answer on
+                an unchanging scene: <em>N-Queens</em> places one non-attacking queen per open row, and
+                <em>Eulerian Trail</em> traces every edge once from the green start node to the red goal node.
+                <strong>Multi-Step Group (right)</strong> executes sequential state updates where each move alters the
+                scene for the next: <em>Sokoban</em> moves the yellow agent to push the brown box onto the green target,
+                <em>Rush Hour</em> slides blocking cars along their axes so the red car exits right, and
+                <em>Cube Net Folding</em> folds five numbered flaps upward one crease at a time onto the blue base into
+                a closed cube.
               </figcaption>
             </figure>
 
@@ -566,7 +580,8 @@
               <p>
                 Even on unseen instances of trained tasks (<em>n</em> = 1,230), accuracy concentrates in static
                 single-step drawing (<strong>70.45%</strong> vs. <strong>40.00%</strong> Multi-Step, where 39.47% of
-                tasks remain at 0/5) and depends heavily on knowing the reference frame count in advance.
+                tasks remain completely unsolved at 0%) and depends heavily on knowing the true solution frame count in
+                advance.
               </p>
             </div>
 
@@ -631,11 +646,13 @@
 
             <div class="prose">
               <p>
-                Unlike an LLM that generates until emitting a stop token, a video diffusion model denoises a preset
-                frame canvas all at once. Instead of moving slightly faster or holding a solved board still under
-                <strong>Fixed Length (81 frames, 5 s)</strong>, the model memorizes training pace, triggering
-                illegal multi-object shortcuts when 81f is shorter and post-solution over-painting when 81f is longer,
-                with the Multi-Step duration gap widening fivefold across Epochs 2&ndash;10 (from 5.09 to 25.61 pp).
+                Unlike an LLM that generates until emitting a stop token, a video diffusion model must preset output
+                frame count before denoising all frames jointly. Compared against each problem&rsquo;s true solution
+                length (<strong>Reference Length</strong>), presetting a realistic deployment budget of
+                <strong>Fixed Length (81 frames)</strong> breaks post-trained execution in both directions: when 81
+                frames is too short, the model takes illegal multi-object shortcuts instead of moving faster; when 81
+                frames is too long, it finishes early and keeps painting extra cells instead of holding still, with the
+                Multi-Step duration gap widening more than fivefold across Epochs 2&ndash;10 (from 5.09 to 25.61 pp).
               </p>
             </div>
 
@@ -646,16 +663,22 @@
               <div class="fig-img-wrap">
                 <img
                   src="assets/figures/fig3_duration.png"
-                  alt="Figure 3: Epoch scaling curves and paired Reference Length vs. Fixed Length rollouts"
+                  alt="Figure 3: Post-trained VideoGym-LTX-2.3 epoch scaling curves and paired Reference Length vs. Fixed Length rollouts"
                   loading="lazy"
                 />
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 3. Post-Training Epochs and Bidirectional Duration Failures.</strong>
-                (a) Longer training widens the gap between Reference Length and Fixed Length (81f), while Composition
-                and Cross-Task remain flat near 0%. (b) On the exact same input image <em>I</em><sub>0</sub>, shorter
-                81f triggers a two-card shortcut (top), whereas longer 81f causes post-solution over-painting (bottom).
+                <strong>Figure 3. Post-Trained Duration Sensitivity: Memorizing Training Pace Instead of Flexible Step Control.</strong>
+                We compare post-trained VideoGym-LTX-2.3 given each problem&rsquo;s true solution length
+                (<em>Reference Length</em>) versus a fixed 81-frame budget (<em>Fixed Length</em>).
+                <strong>(a)</strong> Across Epochs 2&ndash;10, longer training widens the In-Domain gap to +24.1 pp as
+                the model increasingly fits training-video pace, while Composition and Cross-Task stay near 0%.
+                <strong>(b)</strong> Post-trained rollouts on the exact same <em>I</em><sub>0</sub>: when 81 frames is
+                shorter than needed (<em>Inbox Priority Sort</em>: stack cards 5 &rarr; 1 one top card at a time), the
+                model illegally lifts two cards together; when 81 frames is longer than needed
+                (<em>Symmetry Completion</em>: reflect green cells across the red axis and hold still), it finishes
+                mirroring early and then paints four extra cells.
               </figcaption>
             </figure>
           </div>
@@ -680,7 +703,7 @@
                 On identical puzzles, synonymous text rewrites retain <strong>90.76%</strong> of solved In-Domain
                 questions (<strong>52.60%</strong> vs. 56.34%), whereas redrawing visual symbols with matching legend
                 updates retains 65.22% in the Single-Step Group (49.47%) yet collapses to
-                <strong>0.00% (0/70) across all 14 Multi-Step Group tasks</strong>:
+                <strong>0.00% across all 14 Multi-Step Group tasks</strong>:
               </p>
             </div>
 
@@ -719,7 +742,7 @@
                   </div>
                   <span class="pw-arrow" aria-hidden="true">&rarr;</span>
                   <div class="pw-box is-outcome-fail">
-                    <strong>0.00% Multi-Step (0/70)</strong>
+                    <strong>0.00% Multi-Step</strong>
                     <span>49.47% Single-Step &middot; cuts unlinked gaps</span>
                   </div>
                 </div>
@@ -730,16 +753,18 @@
               <div class="fig-img-wrap">
                 <img
                   src="assets/figures/fig4_paraphrase.png"
-                  alt="Figure 4: Matched Multi-Step and Single-Step Prompt Paraphrase rollouts"
+                  alt="Figure 4: Post-trained VideoGym-LTX-2.3 Multi-Step and Single-Step Prompt Paraphrase rollouts"
                   loading="lazy"
                 />
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 4. Text vs. Vision Prompt Paraphrase on Matched Problems.</strong>
-                (a) In a Multi-Step maze, synonymous text rewrites succeed, whereas redrawing the walled maze as rail links on
-                the same grid causes an illegal off-path shortcut (0.00% across all Multi-Step tasks). (b) Marking one
-                static shortest path in the Single-Step Group transfers across redrawn terminals (49.47%).
+                <strong>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text vs. Vision.</strong>
+                Rollouts from post-trained VideoGym-LTX-2.3 on matched problems. <strong>(a)</strong> In Multi-Step
+                <em>Square Maze</em>, synonymous text rewrites pass cleanly, whereas redrawing the walled maze as rail
+                links on the same grid causes an illegal off-path shortcut (0.00% across all Multi-Step tasks).
+                <strong>(b)</strong> Marking one static shortest path in the Single-Step Group still transfers across
+                redrawn square terminals (65.22% Single-Step retention).
               </figcaption>
             </figure>
 
@@ -748,8 +773,8 @@
               <h3>2. Extrapolation: Static Scale Holds Up, Longer Rollout Chains Collapse</h3>
               <p>
                 Across 52 Extrapolation tasks (<strong>25.77%</strong> overall: <strong>52.00%</strong> Single-Step vs.
-                <strong>1.48%</strong> Multi-Step), performance on 5/5 mastered In-Domain sources splits sharply along
-                execution structure:
+                <strong>1.48%</strong> Multi-Step), performance on In-Domain source tasks solved at 100% accuracy splits
+                sharply along execution structure:
               </p>
             </div>
 
@@ -762,15 +787,15 @@
                 <div class="extrap-meters">
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Single-Step (5/5 In-Domain Sources)</span>
-                      <strong class="is-blue">80.00% <small>(24/30)</small></strong>
+                      <span>Single-Step (100%-Solved In-Domain Sources)</span>
+                      <strong class="is-blue">80.00%</strong>
                     </div>
                     <div class="em-track"><i style="width: 80%" class="fill-blue"></i></div>
                   </div>
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Multi-Step (5/5 In-Domain Sources)</span>
-                      <strong class="is-red">0.00% <small>(0/25 &middot; 0/80 at 20/task)</small></strong>
+                      <span>Multi-Step (100%-Solved In-Domain Sources)</span>
+                      <strong class="is-red">0.00% <small>(remains 0% at 20 questions/task)</small></strong>
                     </div>
                     <div class="em-track"><i style="width: 1.5%" class="fill-red"></i></div>
                   </div>
@@ -789,15 +814,15 @@
                 <div class="extrap-meters">
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Single-Step (5/5 In-Domain Sources)</span>
-                      <strong class="is-amber">55.00% <small>(33/60)</small></strong>
+                      <span>Single-Step (100%-Solved In-Domain Sources)</span>
+                      <strong class="is-amber">55.00%</strong>
                     </div>
                     <div class="em-track"><i style="width: 55%" class="fill-amber"></i></div>
                   </div>
                   <div class="em-item">
                     <div class="em-top">
                       <span>Multi-Step (All 7 Tasks)</span>
-                      <strong class="is-red">5.71% <small>(2/35)</small></strong>
+                      <strong class="is-red">5.71%</strong>
                     </div>
                     <div class="em-track"><i style="width: 5.71%" class="fill-red"></i></div>
                   </div>
@@ -814,16 +839,18 @@
               <div class="fig-img-wrap">
                 <img
                   src="assets/figures/fig5_extrapolation.png"
-                  alt="Figure 5: Scale and Mechanism Extrapolation rollouts"
+                  alt="Figure 5: Post-trained VideoGym-LTX-2.3 Scale and Mechanism Extrapolation rollouts"
                   loading="lazy"
                 />
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 5. Scale and Mechanism Extrapolation.</strong>
-                (a) Single-Step Scale Extrapolation transfers cleanly to larger trees (80.0%). (b) Unseen negative
-                steps revert to upward growth seen in training. (c) Scaling Multi-Step bookshelf sorting from 5 to 10
-                books breaks mid-video object permanence despite proportional extra frames (0.0%).
+                <strong>Figure 5. Post-Trained Rollouts under Extrapolation.</strong>
+                Rollouts from post-trained VideoGym-LTX-2.3 comparing 100%-solved In-Domain source tasks (left) against
+                Reference Length Extrapolation (right). <strong>(a)</strong> Single-Step Scale Extrapolation transfers
+                cleanly to larger trees (80.0%). <strong>(b)</strong> Unseen negative height steps revert to upward
+                growth seen in training. <strong>(c)</strong> Scaling Multi-Step bookshelf sorting from 5 to 10 books
+                breaks mid-video object permanence despite proportional extra frames (0.0%).
               </figcaption>
             </figure>
 
@@ -832,7 +859,7 @@
               <h3>3. Composition: Mastered Rules Fail to Combine Across Both Groups</h3>
               <p>
                 When a puzzle requires applying two or three rules that were each mastered in separate training tasks,
-                accuracy collapses across <em>both</em> Single-Step and Multi-Step Groups, proving that
+                accuracy collapses across <em>both</em> Single-Step and Multi-Step Groups, showing that
                 post-training stores isolated task templates rather than composable rules:
               </p>
             </div>
@@ -841,20 +868,20 @@
               <div class="cf-equation">
                 <div class="cf-term is-pass">
                   <span class="cf-kicker">Constituent Rule A</span>
-                  <strong>5/5 Pass <small>(20/20 Audit)</small></strong>
-                  <small>Mastered in isolation</small>
+                  <strong>100% Pass</strong>
+                  <small>Solved in isolation</small>
                 </div>
                 <span class="cf-op">+</span>
                 <div class="cf-term is-pass">
                   <span class="cf-kicker">Constituent Rule B</span>
-                  <strong>5/5 Pass <small>(20/20 Audit)</small></strong>
-                  <small>Mastered in isolation</small>
+                  <strong>100% Pass</strong>
+                  <small>Solved in isolation</small>
                 </div>
                 <span class="cf-op">&rArr;</span>
                 <div class="cf-term is-fail">
                   <span class="cf-kicker">Combined Composition (34 Tasks)</span>
-                  <strong>0.59% <small>(1/170 Overall)</small></strong>
-                  <small>1.67% on 5/5 sources &middot; 4.00% on 20/20 sources (30/34 at 0/20)</small>
+                  <strong>0.59% Overall</strong>
+                  <small>1.67% on 100%-solved sources &middot; 4.00% at 20 questions/task</small>
                 </div>
               </div>
               <div class="cf-notes">
@@ -867,14 +894,16 @@
               <div class="fig-img-wrap">
                 <img
                   src="assets/figures/fig6_composition.png"
-                  alt="Figure 6: Serial Multi-Step and Joint Single-Step Composition failures despite 5/5 constituent mastery"
+                  alt="Figure 6: Post-trained VideoGym-LTX-2.3 Serial Multi-Step and Joint Single-Step Composition failures despite 100% constituent mastery"
                   loading="lazy"
                 />
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 6. Rule Composition Collapse Despite 5/5 Constituent Mastery.</strong>
-                (a) Serial Multi-Step Composition ignores the conveyor push before bridging across water. (b) Joint
+                <strong>Figure 6. Post-Trained Rule Composition Fails Across Both Groups.</strong>
+                Rollouts from post-trained VideoGym-LTX-2.3 comparing constituent In-Domain tasks solved at 100%
+                accuracy (left) against Reference Length Composition (right). <strong>(a)</strong> Serial Multi-Step
+                Composition ignores the conveyor push before bridging across water. <strong>(b)</strong> Joint
                 Single-Step Composition updates polygon sides (+1) while ignoring the paired color cycle.
               </figcaption>
             </figure>
@@ -891,9 +920,9 @@
               <span class="eyebrow">Section 4.4 &middot; Cross-Model &amp; Cross-Benchmark Boundary</span>
               <h2>External SFT &amp; RLVR Models Hit the Exact Same Cliff</h2>
               <p>
-                On held-out <strong>Cross-Task</strong> rules, VideoGym-LTX-2.3 scores <strong>0.61% (1/165)</strong>
-                (0.15% at 20/task, with 32/33 tasks at 0/20). Evaluating <strong>VBVR-Pro A14B</strong> (SFT) and
-                <strong>VBVR-Pro 5B RLVR</strong> (two-stage SFT + RLVR, trained on 1.25M videos across 250 Wan2.2
+                On held-out <strong>Cross-Task</strong> rules, VideoGym-LTX-2.3 scores <strong>0.61%</strong>
+                (0.15% at 20 questions/task, with 32 of 33 tasks at 0%). Evaluating <strong>VBVR-Pro A14B</strong> (SFT)
+                and <strong>VBVR-Pro 5B RLVR</strong> (two-stage SFT + RLVR, trained on 1.25M videos across 250 Wan2.2
                 tasks) confirms that changing backbone, 5&times; per-task data scale, or adding RLVR leaves the
                 <em>Beyond Familiar</em> boundary unchanged at <strong>0.00%</strong>.
               </p>
@@ -963,7 +992,7 @@
                         <div class="cbar-col"><span class="cbar-val is-red">0%</span><div class="cbar-track"><i style="height: 1.5%" class="sw-red-soft"></i></div></div>
                       </div>
                       <div class="cliff-gname is-red">Composition</div>
-                      <div class="cliff-gsub">0/20 on SFT &amp; RLVR</div>
+                      <div class="cliff-gsub">0% on SFT &amp; RLVR</div>
                     </div>
 
                     <div class="cliff-group">
@@ -974,7 +1003,7 @@
                         <div class="cbar-col"><span class="cbar-val is-red">0%</span><div class="cbar-track"><i style="height: 1.5%" class="sw-red-soft"></i></div></div>
                       </div>
                       <div class="cliff-gname is-red">Cross-Task</div>
-                      <div class="cliff-gsub">0/10 on SFT &amp; RLVR</div>
+                      <div class="cliff-gsub">0% on SFT &amp; RLVR</div>
                     </div>
 
                     <div class="cliff-group">

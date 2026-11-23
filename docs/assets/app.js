@@ -155,7 +155,7 @@
           label: "In-Domain (56.3%)",
           caseId: "02_task_families_and_base_models__03_physics_mirror_aim_detector",
           finding:
-            "In-Domain (Mirror Aim Detector): base LTX-2.3 bends light in mid-air (0.00%), whereas post-trained VideoGym-LTX-2.3 traces exact equal-angle reflections across four mirrors to trigger detector B (5/5).",
+            "In-Domain (Mirror Aim Detector): base LTX-2.3 bends light in mid-air (0.00%), whereas post-trained VideoGym-LTX-2.3 traces exact equal-angle reflections across four mirrors to trigger detector B (100% task accuracy).",
           panes: [
             {
               title: "Ground Truth",
@@ -169,7 +169,7 @@
             },
             {
               title: "VideoGym-LTX-2.3",
-              sub: "Post-Trained · 5/5 · 41f",
+              sub: "Post-Trained · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/02_task_families_and_base_models/03_physics_mirror_aim_detector/videogym_ltx23_PASS.mp4",
@@ -179,7 +179,7 @@
             },
             {
               title: "LTX-2.3 Base",
-              sub: "Base · 0/5 · 41f",
+              sub: "Base · 41f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/02_task_families_and_base_models/03_physics_mirror_aim_detector/ltx23_base_FAIL.mp4",
@@ -194,7 +194,7 @@
           label: "Prompt Paraphrase",
           caseId: "01_paper_figures__08_fig4a_square_maze_paraphrase",
           finding:
-            "Matched Square Maze: synonymous Text Prompt Paraphrase transfers cleanly (90.8% retained), whereas redrawing the walled maze as rail links collapses to 0.00% (0/70) across all 14 Multi-Step tasks.",
+            "Matched Square Maze: synonymous Text Prompt Paraphrase transfers cleanly (90.8% retained), whereas redrawing the walled maze as rail links collapses to 0.00% across all 14 Multi-Step tasks.",
           panes: [
             {
               title: "In-Domain",
@@ -228,7 +228,7 @@
             },
             {
               title: "Vision Paraphrase",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 77f",
+              sub: "VideoGym-LTX-2.3 · 77f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/01_paper_figures/08_fig4a_square_maze_paraphrase/videogym_ltx23_vision_paraphrase.mp4",
@@ -243,11 +243,11 @@
           label: "Extrapolation",
           caseId: "04_within_familiar_patterns__03_extrap_multistep_scale_bridge_drop",
           finding:
-            "Scale Extrapolation (Bridge Drop, 7×7 → 14×14): placing 2 bridges scores 5/5 In-Domain, yet scaling to 5 water rows erases start S, recolors the agent, miscounts the bridge gauge, and extrudes a brown plank strip across dry floor on the way to G (0/5; 0/80 across 20/20 MS sources).",
+            "Scale Extrapolation (Bridge Drop, 7×7 → 14×14): placing 2 bridges reaches 100% In-Domain accuracy, yet scaling to 5 water rows erases start S, recolors the agent, miscounts the bridge gauge, and extrudes a brown plank strip across dry floor on the way to G (0.00% across all Multi-Step Scale tasks).",
           panes: [
             {
               title: "7×7 In-Domain",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 21f",
+              sub: "VideoGym-LTX-2.3 · 21f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/04_within_familiar_patterns/03_extrap_multistep_scale_bridge_drop/in_domain_source_PASS.mp4",
@@ -267,7 +267,7 @@
             },
             {
               title: "14×14 Rollout",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 33f",
+              sub: "VideoGym-LTX-2.3 · 33f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/04_within_familiar_patterns/03_extrap_multistep_scale_bridge_drop/extrapolation_rollout_FAIL.mp4",
@@ -282,11 +282,11 @@
           label: "Composition (0.59%)",
           caseId: "01_paper_figures__13_fig6a_bridge_conveyor_composition",
           finding:
-            "Serial Multi-Step Composition: VideoGym-LTX-2.3 solves Conveyor Belt (5/5) and Bridge Drop (5/5) separately, yet ignores the conveyor push when both appear on one grid (0/5).",
+            "Serial Multi-Step Composition: post-trained VideoGym-LTX-2.3 solves Conveyor Belt (100%) and Bridge Drop (100%) separately, yet ignores the conveyor push when both appear on one grid.",
           panes: [
             {
               title: "Rule A (Conveyor)",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 21f",
+              sub: "VideoGym-LTX-2.3 · 21f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/constituent_1_PASS.mp4",
@@ -296,7 +296,7 @@
             },
             {
               title: "Rule B (Bridge)",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 21f",
+              sub: "VideoGym-LTX-2.3 · 21f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/constituent_2_PASS.mp4",
@@ -316,7 +316,7 @@
             },
             {
               title: "Combined Rollout",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/01_paper_figures/13_fig6a_bridge_conveyor_composition/composition_FAIL.mp4",
@@ -331,7 +331,7 @@
           label: "Cross-Task (0.61%)",
           caseId: "05_beyond_familiar_patterns_and_n20_audit__02_crosstask_minimum_arborescence",
           finding:
-            "Cross-Task (Minimum Directed Spanning Arborescence): despite 84.71% In-Domain accuracy across 17 Graph Theory tasks and familiar orange edge strokes, this unseen rule scores 0/20.",
+            "Cross-Task (Minimum Directed Spanning Arborescence): despite 84.71% In-Domain accuracy across 17 Graph Theory tasks and familiar orange edge strokes, this unseen rule scores 0.00% across all 20 expanded test questions.",
           panes: [
             {
               title: "Ground Truth",
@@ -345,7 +345,7 @@
             },
             {
               title: "VideoGym-LTX-2.3",
-              sub: "Held-Out Rule · 0/20 · 33f",
+              sub: "Held-Out Rule · 33f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/02_crosstask_minimum_arborescence/videogym_ltx23_FAIL.mp4",
@@ -367,7 +367,7 @@
           label: "Shorter Budget (81f < 97f)",
           caseId: "01_paper_figures__06_fig3b_inbox_priority_short_81f",
           finding:
-            "Inbox Priority Sort: when Fixed Length (81f) is shorter than Reference Length (97f), instead of moving cards faster one by one, the model illegally lifts multiple cards together.",
+            "Inbox Priority Sort: when Fixed Length (81f) is shorter than Reference Length (97f), instead of moving cards faster one by one, post-trained VideoGym-LTX-2.3 illegally lifts multiple cards together.",
           panes: [
             {
               title: "Ground Truth",
@@ -406,7 +406,7 @@
           label: "Longer Budget (81f > 17f)",
           caseId: "01_paper_figures__07_fig3b_symmetry_completion_long_81f",
           finding:
-            "Symmetry Completion: when Fixed Length (81f) exceeds Reference Length (17f), the model finishes the 1 s mirror reflection early and then keeps painting spurious extra cells.",
+            "Symmetry Completion: when Fixed Length (81f) exceeds Reference Length (17f), post-trained VideoGym-LTX-2.3 finishes the mirror reflection early and then keeps painting spurious extra cells.",
           panes: [
             {
               title: "Ground Truth",
@@ -420,7 +420,7 @@
             },
             {
               title: "Reference Length",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 17f",
+              sub: "VideoGym-LTX-2.3 · 17f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/07_fig3b_symmetry_completion_long_81f/videogym_ltx23_ref_PASS.mp4",
@@ -430,7 +430,7 @@
             },
             {
               title: "Fixed Length (81f)",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 81f",
+              sub: "VideoGym-LTX-2.3 · 81f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/01_paper_figures/07_fig3b_symmetry_completion_long_81f/videogym_ltx23_fixed81f_FAIL.mp4",
@@ -498,14 +498,14 @@
       tabs: [
         {
           id: "3rule_comp",
-          label: "3-Rule Composition (20/20 × 3 → 0/20)",
+          label: "3-Rule Composition (100% × 3 → 0%)",
           caseId: "05_beyond_familiar_patterns_and_n20_audit__01_comp_3rule_ancestor_subtree_diameter",
           finding:
-            "Graph Theory 3-Rule Composition: VideoGym-LTX-2.3 achieves 20/20 on Closest Common Ancestor, Subtree Size, and Diameter Endpoints individually, yet scores 0/20 when combined.",
+            "Graph Theory 3-Rule Composition: post-trained VideoGym-LTX-2.3 reaches 100% In-Domain accuracy on Closest Common Ancestor, Subtree Size, and Diameter Endpoints individually (across 20 questions each), yet scores 0.00% when combined.",
           panes: [
             {
               title: "Rule 1: Ancestor",
-              sub: "20/20 ID · 41f",
+              sub: "100% ID · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c1_cca_PASS.mp4",
@@ -515,7 +515,7 @@
             },
             {
               title: "Rule 2: Subtree",
-              sub: "20/20 ID · 41f",
+              sub: "100% ID · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c2_subtree_PASS.mp4",
@@ -525,7 +525,7 @@
             },
             {
               title: "Rule 3: Diameter",
-              sub: "20/20 ID · 41f",
+              sub: "100% ID · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c3_diameter_PASS.mp4",
@@ -545,7 +545,7 @@
             },
             {
               title: "Combined Rollout",
-              sub: "0/20 Comp. · 41f",
+              sub: "0% Comp. · 41f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/composition_FAIL.mp4",
@@ -557,14 +557,14 @@
         },
         {
           id: "comp_joint",
-          label: "Joint Single-Step Comp. (0/5)",
+          label: "Joint Single-Step Comp.",
           caseId: "01_paper_figures__14_fig6b_polygon_color_composition",
           finding:
-            "Joint Single-Step Composition: mastering Polygon Side Step (5/5) and Color Cycle (5/5) separately still fails when card 4 must advance sides and cycle color together (0/5).",
+            "Joint Single-Step Composition: solving Polygon Side Step (100%) and Color Cycle (100%) separately still fails when card 4 must advance sides and cycle color together.",
           panes: [
             {
               title: "Rule A (+1 Side)",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/14_fig6b_polygon_color_composition/constituent_1_PASS.mp4",
@@ -574,7 +574,7 @@
             },
             {
               title: "Rule B (Color)",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/14_fig6b_polygon_color_composition/constituent_2_PASS.mp4",
@@ -594,7 +594,7 @@
             },
             {
               title: "Combined Rollout",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/01_paper_figures/14_fig6b_polygon_color_composition/composition_FAIL.mp4",
@@ -609,11 +609,11 @@
           label: "Mechanism Extrap. Bias",
           caseId: "01_paper_figures__11_fig5b_size_sequence_mech_extrap",
           finding:
-            "Mechanism Extrapolation (Size Sequence): reversing a trained positive height step (5/5) to an unseen negative step (8, 6, 4 → 2) causes reversion to upward growth (draws 6; 0/5).",
+            "Mechanism Extrapolation (Size Sequence): reversing a trained positive height step (100% In-Domain) to an unseen negative step (8, 6, 4 → 2) causes reversion to upward growth (draws height 6; 0% pass).",
           panes: [
             {
               title: "Growing Source",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/01_paper_figures/11_fig5b_size_sequence_mech_extrap/in_domain_source_PASS.mp4",
@@ -633,7 +633,7 @@
             },
             {
               title: "Model Rollout",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 25f",
+              sub: "VideoGym-LTX-2.3 · 25f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/01_paper_figures/11_fig5b_size_sequence_mech_extrap/extrapolation_rollout.mp4",
@@ -648,11 +648,11 @@
           label: "Single-Step Icon Binding",
           caseId: "04_within_familiar_patterns__01_paraphrase_singlestep_yinyang_symbol_fail",
           finding:
-            "Single-Step Vision Paraphrase (Yin-Yang): even in the Single-Step Group, tasks bound to trained stone icons hold under Text Paraphrase (5/5) yet drop to 0/5 when redrawn as tiles.",
+            "Single-Step Vision Paraphrase (Yin-Yang): even in the Single-Step Group, tasks bound to trained stone icons hold under Text Paraphrase (100%) yet drop to 0% when redrawn as tiles.",
           panes: [
             {
               title: "In-Domain Stones",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 45f",
+              sub: "VideoGym-LTX-2.3 · 45f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/04_within_familiar_patterns/01_paraphrase_singlestep_yinyang_symbol_fail/in_domain_PASS.mp4",
@@ -662,7 +662,7 @@
             },
             {
               title: "Text Paraphrase",
-              sub: "VideoGym-LTX-2.3 · 5/5 · 45f",
+              sub: "VideoGym-LTX-2.3 · 45f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/04_within_familiar_patterns/01_paraphrase_singlestep_yinyang_symbol_fail/text_paraphrase_PASS.mp4",
@@ -682,7 +682,7 @@
             },
             {
               title: "Vision Paraphrase",
-              sub: "VideoGym-LTX-2.3 · 0/5 · 45f",
+              sub: "VideoGym-LTX-2.3 · 45f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/04_within_familiar_patterns/01_paraphrase_singlestep_yinyang_symbol_fail/vision_paraphrase_rollout.mp4",
@@ -704,7 +704,7 @@
           label: "OOD Composition (0.00%)",
           caseId: "06_external_sft_rlvr_and_cross_benchmark__02_vbvr_composition_collapse_symbol_edit",
           finding:
-            "VBVR-Pro trains symbol shifting and symbol insertion separately across 1.25M videos, yet combining both (shift right to make space, then insert hearts) scores 0/5 here and 0/20 across all 4 Composition tasks.",
+            "VBVR-Pro trains symbol shifting and symbol insertion separately across 1.25M videos, yet combining both (shift right to make space, then insert hearts) scores 0.00% across all Composition tasks for both SFT and RLVR.",
           panes: [
             {
               title: "VBVR-Pro Ref.",
@@ -718,7 +718,7 @@
             },
             {
               title: "VBVR-Pro A14B",
-              sub: "14B SFT · 0/5 · 54f",
+              sub: "14B SFT · 54f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/02_vbvr_composition_collapse_symbol_edit/vbvr_a14b.mp4",
@@ -728,7 +728,7 @@
             },
             {
               title: "VBVR-Pro 5B RLVR",
-              sub: "SFT + RLVR · 0/5 · 54f",
+              sub: "SFT + RLVR · 54f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/02_vbvr_composition_collapse_symbol_edit/vbvr_5b_rlvr.mp4",
@@ -743,7 +743,7 @@
           label: "OOD Cross-Task (0.00%)",
           caseId: "06_external_sft_rlvr_and_cross_benchmark__03_vbvr_crosstask_collapse_gravity_physics",
           finding:
-            "On unseen-rule Cross-Task problems in VBVR-Pro Bench (damped gravity bouncing with velocity arrows), both VBVR-Pro A14B (SFT) and VBVR-Pro 5B RLVR score 0/5 here and 0/10 overall.",
+            "On unseen-rule Cross-Task problems in VBVR-Pro Bench (damped gravity bouncing with velocity arrows), both VBVR-Pro A14B (SFT) and VBVR-Pro 5B RLVR score 0.00% overall.",
           panes: [
             {
               title: "VBVR-Pro Ref.",
@@ -757,7 +757,7 @@
             },
             {
               title: "VBVR-Pro A14B",
-              sub: "14B SFT · 0/5 · 192f",
+              sub: "14B SFT · 192f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/03_vbvr_crosstask_collapse_gravity_physics/vbvr_a14b.mp4",
@@ -767,7 +767,7 @@
             },
             {
               title: "VBVR-Pro 5B RLVR",
-              sub: "SFT + RLVR · 0/5 · 192f",
+              sub: "SFT + RLVR · 192f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/03_vbvr_crosstask_collapse_gravity_physics/vbvr_5b_rlvr.mp4",
@@ -831,7 +831,7 @@
           label: "Cross-Bench: VideoGym Task",
           caseId: "06_external_sft_rlvr_and_cross_benchmark__04_videogym_in_domain_shortest_path",
           finding:
-            "On VideoGym-Test's Graph Shortest Path, VideoGym-LTX-2.3 passes cleanly (5/5), whereas Cross-Benchmark VBVR-Pro A14B (1.77% overall) cuts across vertex interiors and 5B RLVR (0.99%) colors only one edge (0/5).",
+            "On VideoGym-Test's Graph Shortest Path, post-trained VideoGym-LTX-2.3 passes cleanly (100% task accuracy), whereas Cross-Benchmark VBVR-Pro A14B (1.77% overall) cuts across vertex interiors and 5B RLVR (0.99%) colors only one edge.",
           panes: [
             {
               title: "VideoGym Ref.",
@@ -845,7 +845,7 @@
             },
             {
               title: "VideoGym-LTX-2.3",
-              sub: "Own In-Domain · 5/5 · 41f",
+              sub: "Own In-Domain · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/videogym_ltx23_PASS.mp4",
@@ -855,7 +855,7 @@
             },
             {
               title: "VBVR-Pro A14B",
-              sub: "Cross-Benchmark · 0/5 · 41f",
+              sub: "Cross-Benchmark · 41f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/vbvr_a14b_crossbench_FAIL.mp4",
@@ -865,7 +865,7 @@
             },
             {
               title: "VBVR-Pro 5B RLVR",
-              sub: "Cross-Benchmark · 0/5 · 41f",
+              sub: "Cross-Benchmark · 41f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/06_external_sft_rlvr_and_cross_benchmark/04_videogym_in_domain_shortest_path/vbvr_5b_rlvr_crossbench_FAIL.mp4",
