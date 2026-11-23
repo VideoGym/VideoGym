@@ -505,7 +505,7 @@
           panes: [
             {
               title: "Rule 1: Ancestor",
-              sub: "100% ID · 41f",
+              sub: "VideoGym-LTX-2.3 · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c1_cca_PASS.mp4",
@@ -515,7 +515,7 @@
             },
             {
               title: "Rule 2: Subtree",
-              sub: "100% ID · 41f",
+              sub: "VideoGym-LTX-2.3 · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c2_subtree_PASS.mp4",
@@ -525,7 +525,7 @@
             },
             {
               title: "Rule 3: Diameter",
-              sub: "100% ID · 41f",
+              sub: "VideoGym-LTX-2.3 · 41f",
               verdict: "pass",
               badge: "Pass",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/c3_diameter_PASS.mp4",
@@ -545,7 +545,7 @@
             },
             {
               title: "Combined Rollout",
-              sub: "0% Comp. · 41f",
+              sub: "VideoGym-LTX-2.3 · 41f",
               verdict: "fail",
               badge: "Fail",
               src: "media/showcase/05_beyond_familiar_patterns_and_n20_audit/01_comp_3rule_ancestor_subtree_diameter/composition_FAIL.mp4",
@@ -955,9 +955,9 @@
             <strong>${esc(f.name)}</strong>
             <span>${f.tasks} tasks</span>
           </div>
-          <div class="ft-rate-row">
+          <div class="ft-rate-row" title="Post-trained VideoGym-LTX-2.3 In-Domain pass rate across ${f.tasks} tasks">
             <div class="ft-bar"><i style="width: ${f.rate}%" class="${f.dominant === "ss" ? "fill-blue" : "fill-green"}"></i></div>
-            <span>${f.rate.toFixed(1)}% ID</span>
+            <span>${f.rate.toFixed(1)}% ID Pass</span>
           </div>
         </div>
       </div>`,

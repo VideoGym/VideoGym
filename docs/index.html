@@ -402,11 +402,11 @@
               <div class="mosaic-head">
                 <div>
                   <strong>11 Task Families (246 In-Domain Tasks)</strong>
-                  <span>Hover to preview reference video &middot; Click to browse family</span>
+                  <span>Hover to preview reference video &middot; Click to browse &middot; Bars show post-trained VideoGym-LTX-2.3 In-Domain pass rate</span>
                 </div>
                 <div class="mosaic-legend">
-                  <span><i class="dot dot-ss"></i>Single-Step Dominant</span>
-                  <span><i class="dot dot-ms"></i>Multi-Step Dominant</span>
+                  <span><i class="dot dot-ss"></i>Single-Step (SS) Dominant</span>
+                  <span><i class="dot dot-ms"></i>Multi-Step (MS) Dominant</span>
                 </div>
               </div>
               <div id="family-mosaic" class="family-mosaic"></div>
@@ -763,9 +763,10 @@
                 <strong>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text vs. Vision.</strong>
                 Rollouts from post-trained VideoGym-LTX-2.3 on matched problems. <strong>(a)</strong> In Multi-Step
                 <em>Square Maze</em>, synonymous text rewrites pass cleanly, whereas redrawing the walled maze as rail
-                links on the same grid causes an illegal off-path shortcut (0.00% across all Multi-Step tasks).
-                <strong>(b)</strong> Marking one static shortest path in the Single-Step Group still transfers across
-                redrawn square terminals (65.22% Single-Step retention).
+                links on the same grid causes an illegal off-path shortcut (0.00% pass rate across all 14 Multi-Step
+                Vision Paraphrase tasks). <strong>(b)</strong> Marking one static shortest path in the Single-Step
+                Group still transfers across redrawn square terminals (65.22% of solved Single-Step In-Domain problems
+                retained under Vision Paraphrase).
               </figcaption>
             </figure>
 
@@ -773,9 +774,10 @@
             <div class="prose">
               <h3>2. Extrapolation: Static Scale Holds Up, Longer Rollout Chains Collapse</h3>
               <p>
-                Across 52 Extrapolation tasks (<strong>25.77%</strong> overall: <strong>52.00%</strong> Single-Step vs.
-                <strong>1.48%</strong> Multi-Step), performance on In-Domain source tasks solved at 100% accuracy splits
-                sharply along execution structure:
+                Across all 52 Extrapolation tasks, post-trained VideoGym-LTX-2.3 scores <strong>25.77%</strong> overall
+                (<strong>52.00%</strong> in the Single-Step Group vs. <strong>1.48%</strong> in the Multi-Step Group).
+                Controlling for source-task competence by restricting to tasks whose In-Domain source is solved at 100%
+                accuracy reveals a sharp split in Extrapolation pass rate:
               </p>
             </div>
 
@@ -783,19 +785,19 @@
               <div class="extrap-card">
                 <div class="extrap-title-row">
                   <strong>Scale Extrapolation</strong>
-                  <span>29 Tasks &middot; Larger Grids, Objects, or Steps</span>
+                  <span>29 Tasks &middot; Larger Grids, Objects, or Steps &middot; Extrapolation Pass Rate</span>
                 </div>
                 <div class="extrap-meters">
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Single-Step (100%-Solved In-Domain Sources)</span>
+                      <span>Single-Step Group (6 tasks with 100%-solved In-Domain sources)</span>
                       <strong class="is-blue">80.00%</strong>
                     </div>
                     <div class="em-track"><i style="width: 80%" class="fill-blue"></i></div>
                   </div>
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Multi-Step (100%-Solved In-Domain Sources)</span>
+                      <span>Multi-Step Group (5 tasks with 100%-solved sources; 0.00% across all 20 tasks)</span>
                       <strong class="is-red">0.00% <small>(remains 0% at 20 questions/task)</small></strong>
                     </div>
                     <div class="em-track"><i style="width: 1.5%" class="fill-red"></i></div>
@@ -810,19 +812,19 @@
               <div class="extrap-card">
                 <div class="extrap-title-row">
                   <strong>Mechanism Extrapolation</strong>
-                  <span>23 Tasks &middot; Unseen Boundary Cases</span>
+                  <span>23 Tasks &middot; Unseen Boundary Cases &middot; Extrapolation Pass Rate</span>
                 </div>
                 <div class="extrap-meters">
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Single-Step (100%-Solved In-Domain Sources)</span>
+                      <span>Single-Step Group (12 tasks with 100%-solved In-Domain sources)</span>
                       <strong class="is-amber">55.00%</strong>
                     </div>
                     <div class="em-track"><i style="width: 55%" class="fill-amber"></i></div>
                   </div>
                   <div class="em-item">
                     <div class="em-top">
-                      <span>Multi-Step (All 7 Tasks)</span>
+                      <span>Multi-Step Group (all 7 Multi-Step tasks; none reach 100% In-Domain)</span>
                       <strong class="is-red">5.71%</strong>
                     </div>
                     <div class="em-track"><i style="width: 5.71%" class="fill-red"></i></div>
@@ -847,11 +849,15 @@
               </div>
               <figcaption>
                 <strong>Figure 5. Post-Trained Rollouts under Extrapolation.</strong>
-                Rollouts from post-trained VideoGym-LTX-2.3 comparing 100%-solved In-Domain source tasks (left) against
-                Reference Length Extrapolation (right). <strong>(a)</strong> Single-Step Scale Extrapolation transfers
-                cleanly to larger trees (80.0%). <strong>(b)</strong> Unseen negative height steps revert to upward
-                growth seen in training. <strong>(c)</strong> Scaling Multi-Step bookshelf sorting from 5 to 10 books
-                breaks mid-video object permanence despite proportional extra frames (0.0%).
+                Rollouts from post-trained VideoGym-LTX-2.3 comparing solved In-Domain source instances (left) against
+                Reference Length Extrapolation instances (right). <strong>(a)</strong> Single-Step Scale
+                (<em>Tree Path</em>, 10 &rarr; 16 nodes) transfers cleanly (80.00% pass rate across Single-Step Scale
+                tasks with 100%-solved In-Domain sources). <strong>(b)</strong> Single-Step Mechanism
+                (<em>Size Sequence</em>) fails on an unseen negative step (8, 6, 4 &rarr; 2), fading in height 6 by
+                replaying upward training growth (55.00% pass rate across Single-Step Mechanism tasks with 100%-solved
+                sources, succeeding mainly when training trends still apply). <strong>(c)</strong> Multi-Step Scale
+                (<em>Bookshelf Sort</em>, 5 &rarr; 10 books) merges and drops books mid-video before copying the target
+                (0.00% pass rate across all Multi-Step Scale tasks).
               </figcaption>
             </figure>
 
@@ -903,9 +909,11 @@
               <figcaption>
                 <strong>Figure 6. Post-Trained Rule Composition Fails Across Both Groups.</strong>
                 Rollouts from post-trained VideoGym-LTX-2.3 comparing constituent In-Domain tasks solved at 100%
-                accuracy (left) against Reference Length Composition (right). <strong>(a)</strong> Serial Multi-Step
-                Composition ignores the conveyor push before bridging across water. <strong>(b)</strong> Joint
-                Single-Step Composition updates polygon sides (+1) while ignoring the paired color cycle.
+                accuracy (left) against Reference Length Composition (right; 1.00% pass rate across all 20 Multi-Step
+                and 0.00% across all 14 Single-Step Composition tasks). <strong>(a)</strong> Serial Multi-Step
+                Composition (<em>Conveyor Belt</em> + <em>Bridge Drop</em>) ignores the conveyor push before bridging
+                across water. <strong>(b)</strong> Joint Single-Step Composition (<em>Polygon Side Step</em> +
+                <em>Color Cycle</em>) updates polygon sides (+1) while ignoring the paired color cycle.
               </figcaption>
             </figure>
 

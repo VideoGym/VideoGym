@@ -197,11 +197,11 @@ Evaluating **VideoGym-LTX-2.3** against all three base models (`LTX-2.3`, `Wan2.
 </p>
 <p>
   <img src="docs/assets/figures/fig4_paraphrase.png" alt="Post-trained VideoGym-LTX-2.3 rollouts on Multi-Step square maze and Single-Step shortest path across In-Domain, Text Paraphrase, and Vision Paraphrase" width="100%">
-  <sub><b>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text Robustness vs. Visual Symbol Dependence.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> on matched problems. <b>(a)</b> On Multi-Step <i>Square Maze</i>, Text Prompt Paraphrase passes cleanly, whereas Vision Prompt Paraphrase (diamond stations and linked rails on the same grid) cuts across an unlinked gap. <b>(b)</b> On Single-Step <i>Shortest Path</i>, redrawing circular nodes into square terminals still transfers, matching Single-Step retention (65.22%) versus Multi-Step collapse (0.00%).</sub>
+  <sub><b>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text Robustness vs. Visual Symbol Dependence.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> on matched problems. <b>(a)</b> On Multi-Step <i>Square Maze</i>, Text Prompt Paraphrase passes cleanly, whereas Vision Prompt Paraphrase (diamond stations and linked rails on the same grid) cuts across an unlinked gap (0.00% pass rate across all 14 Multi-Step Vision Paraphrase tasks). <b>(b)</b> On Single-Step <i>Shortest Path</i>, redrawing circular nodes into square terminals still transfers, matching Single-Step Vision Paraphrase retention (65.22% of solved In-Domain problems retained).</sub>
 </p>
 <p>
   <img src="docs/assets/figures/fig5_extrapolation.png" alt="Post-trained VideoGym-LTX-2.3 Extrapolation rollouts across Single-Step Scale, Single-Step Mechanism, and Multi-Step Scale" width="100%">
-  <sub><b>Figure 5. Post-Trained Rollouts under Extrapolation.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> comparing 100%-solved In-Domain source tasks (left) against Reference Length Extrapolation (right). <b>(a)</b> Single-Step Scale (<i>Tree Path</i>, 10 → 16 nodes) transfers cleanly (80.0%). <b>(b)</b> Single-Step Mechanism (<i>Size Sequence</i>) fails on an unseen negative step (8, 6, 4 → 2), fading in height 6 by replaying upward training growth. <b>(c)</b> Multi-Step Scale (<i>Bookshelf Sort</i>, 5 → 10 books) merges and drops books mid-video before copying the target (0.0%).</sub>
+  <sub><b>Figure 5. Post-Trained Rollouts under Extrapolation.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> comparing solved In-Domain source instances (left) against Reference Length Extrapolation instances (right). <b>(a)</b> Single-Step Scale (<i>Tree Path</i>, 10 → 16 nodes) transfers cleanly (80.00% pass rate across Single-Step Scale tasks with 100%-solved In-Domain sources). <b>(b)</b> Single-Step Mechanism (<i>Size Sequence</i>) fails on an unseen negative step (8, 6, 4 → 2), fading in height 6 by replaying upward training growth (55.00% pass rate across Single-Step Mechanism tasks with 100%-solved sources, succeeding mainly when training trends still apply). <b>(c)</b> Multi-Step Scale (<i>Bookshelf Sort</i>, 5 → 10 books) merges and drops books mid-video before copying the target (0.00% pass rate across all Multi-Step Scale tasks).</sub>
 </p>
 </details>
 
@@ -224,7 +224,7 @@ Evaluating **VideoGym-LTX-2.3** against all three base models (`LTX-2.3`, `Wan2.
 
 <p>
   <img src="docs/assets/figures/fig6_composition.png" alt="Post-trained VideoGym-LTX-2.3 Serial Multi-Step and Joint Single-Step Composition failures despite 100% constituent In-Domain accuracy" width="100%">
-  <sub><b>Figure 6. Post-Trained Rule Composition Fails Across Both Groups.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> comparing constituent In-Domain tasks solved at 100% accuracy (left) against Reference Length Composition (right): serial Multi-Step ignores the conveyor push before bridging, and joint Single-Step updates polygon sides while ignoring the 3-color cycle.</sub>
+  <sub><b>Figure 6. Post-Trained Rule Composition Fails Across Both Groups.</b> Rollouts from post-trained <b>VideoGym-LTX-2.3</b> comparing constituent In-Domain tasks solved at 100% accuracy (left) against Reference Length Composition (right; 1.00% pass rate across all 20 Multi-Step and 0.00% across all 14 Single-Step Composition tasks): <b>(a)</b> serial Multi-Step (<i>Conveyor Belt</i> + <i>Bridge Drop</i>) ignores the conveyor push before bridging, and <b>(b)</b> joint Single-Step (<i>Polygon Side Step</i> + <i>Color Cycle</i>) updates polygon sides while ignoring the 3-color cycle.</sub>
 </p>
 
 To verify whether different backbones, 5× per-task data scale, or RLVR shift this boundary, we evaluate `VideoGym-LTX-2.3` alongside **VBVR-Pro A14B** (SFT) and **VBVR-Pro 5B RLVR** (two-stage SFT + DanceGRPO/CPS RLVR), both trained on the 1.25M-video VBVR-Pro dataset across 250 tasks ([`relations.toml`](evaluation/cross_benchmark/vbvr_pro/relations.toml)):
@@ -304,7 +304,7 @@ Prior studies reported higher out-of-domain scores (`35–70/100`) for two reaso
 
 <p>
   <img src="docs/assets/figures/fig7_scoring.png" alt="Comparison of final-state and continuous partial-credit metrics against full-video verification on post-trained model rollouts" width="100%">
-  <sub><b>Figure 7. Why Loose Metrics Mistake Post-Trained Shortcuts for Reasoning.</b> On post-trained model rollouts, final-state checks miss mid-video agent duplication (a, c), while continuous partial-credit floors and pixel tolerances award up to 100/100 to unsolved videos (b, d).</sub>
+  <sub><b>Figure 7. Why Loose Metrics Mistake Post-Trained Shortcuts for Reasoning.</b> <b>(a)</b> On VideoGym Composition (<i>Portal + Conveyor</i>), post-trained <b>VideoGym-LTX-2.3</b> spawns two duplicate agents mid-video yet lands on G in the final frame. <b>(b)</b> On VBVR-Pro Bench (<i>Majority Color</i>), post-trained <b>VBVR-Pro 5B RLVR</b> leaves a pink square unremoved yet receives 100/100 under partial-credit pixel tolerances. <b>(c)</b> Splitting post-trained VideoGym-LTX-2.3 final-state passes (bar length) into full-video passes and invalid-process videos (parentheses: invalid share of final-state passes). <b>(d)</b> Full-video verification failure rates across VBVR-Pro continuous-score cutoffs.</sub>
 </p>
 
 ---
