@@ -670,16 +670,20 @@
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 3. Post-Training Across Epochs and Sensitivity to Preset Frame Count.</strong>
-                We evaluate post-trained VideoGym-LTX-2.3 given each problem&rsquo;s true solution length
-                (<em>Reference Length</em>) versus a fixed 81-frame budget (<em>Fixed Length</em>).
-                <strong>(a)</strong> Across Epochs 2&ndash;10, longer training widens the In-Domain gap to +24.1 pp as
-                the model increasingly fits training-video pace, while Extrapolation plateaus after Epoch 4 and
-                Composition/Cross-Task stay near 0%. <strong>(b)</strong> Paired post-trained rollouts on the exact same
-                <em>I</em><sub>0</sub>: when 81 frames is shorter than needed (<em>Inbox Priority Sort</em>: stack cards
-                5 &rarr; 1 one top card at a time), the model illegally lifts two cards together; when 81 frames is
-                longer than needed (<em>Symmetry Completion</em>: reflect green cells across the red axis and hold
-                still), it finishes mirroring early and then paints four extra cells.
+                <strong>Figure 3. Post-Training Across Epochs and Why a Fixed Frame Count Fails When Reasoning Length Varies.</strong>
+                Unlike LLMs that generate tokens until reaching an answer and then stop, video diffusion models must
+                preset an exact frame count before generation even though a problem&rsquo;s required steps are unknown
+                beforehand; we compare post-trained VideoGym-LTX-2.3 given each problem&rsquo;s true solution length
+                (<em>Reference Length</em>) versus a preset 81-frame budget (<em>Fixed Length</em>).
+                <strong>(a)</strong> Across epochs 2&ndash;10, longer training widens the In-Domain gap between
+                Reference Length and Fixed Length to +24.1 pp as the model increasingly fits training-video pace, while
+                Extrapolation plateaus after epoch 4 and Composition/Cross-Task stay near 0%. <strong>(b)</strong> Paired
+                rollouts on the exact same input <em>I</em><sub>0</sub> illustrate how a preset 81-frame budget fails in
+                both directions instead of speeding up legal moves or stopping once solved: when 81 frames is shorter
+                than needed (<em>Inbox Priority Sort</em>: move one top card per step to stack 5 &rarr; 1), the model
+                rushes via an illegal two-card move; when 81 frames is longer than needed
+                (<em>Symmetry Completion</em>: reflect green cells across the red axis and hold still), it solves the
+                reflection early and then over-edits four extra cells.
               </figcaption>
             </figure>
           </div>
@@ -760,13 +764,13 @@
                 <span class="fig-zoom-hint">Click to enlarge</span>
               </div>
               <figcaption>
-                <strong>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text vs. Vision.</strong>
-                Rollouts from post-trained VideoGym-LTX-2.3 on matched problems. <strong>(a)</strong> In Multi-Step
-                <em>Square Maze</em>, synonymous text rewrites pass cleanly, whereas redrawing the walled maze as rail
-                links on the same grid causes an illegal off-path shortcut (0.00% pass rate across all 14 Multi-Step
-                Vision Paraphrase tasks). <strong>(b)</strong> Marking one static shortest path in the Single-Step
-                Group still transfers across redrawn square terminals (65.22% of solved Single-Step In-Domain problems
-                retained under Vision Paraphrase).
+                <strong>Figure 4. Post-Trained Rollouts under Prompt Paraphrase: Text Robustness vs. Visual Symbol Dependence.</strong>
+                Rollouts from post-trained VideoGym-LTX-2.3 under Reference Length on one-to-one matched problems.
+                <strong>(a)</strong> In Multi-Step <em>Square Maze</em>, synonymous text rewrites pass cleanly, whereas
+                redrawing the walled maze as diamond stations and linked rails on the same grid cuts across an unlinked
+                gap (0.00% pass rate across all 14 Multi-Step Vision Paraphrase tasks). <strong>(b)</strong> Marking one
+                static shortest path in the Single-Step Group still transfers across redrawn square terminals (65.22% of
+                solved Single-Step In-Domain problems retained under Vision Paraphrase).
               </figcaption>
             </figure>
 
