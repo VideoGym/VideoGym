@@ -28,7 +28,7 @@
 
 ## 🔎 Overview
 
-**VideoGym** is an end-to-end open-source codebase and benchmark suite for studying whether post-training (SFT and RLVR) turns pretrained video generation models from **visual renderers** (turning stated scene descriptions into frames) into **visual reasoners** (given an initial image <i>I</i><sub>0</sub>, rules, and a goal with the answer unknown, working out valid intermediate states and a final answer). Solving new instances of a trained task can simply replay a learned solution pattern; genuine visual reasoning should extend **beyond single familiar task patterns** by combining mastered rules (`Composition`) and showing nontrivial transfer to unseen rules in the same problem categories (`Cross-Task`).
+**VideoGym** is an end-to-end open-source codebase and benchmark suite for testing whether video generation models can **really learn to reason** through post-training (SFT and RLVR): given an initial image <i>I</i><sub>0</sub>, rules, and a goal with the answer unknown, working out valid intermediate states and a final answer across frames. Solving new instances of a practiced task may only replay a familiar solution pattern; truly learning to reason requires extending **beyond single familiar task patterns** by combining mastered rules (`Composition`) and showing nontrivial transfer to unseen rules in the same problem categories (`Cross-Task`).
 
 <div style="overflow-x: auto;">
 
@@ -163,7 +163,7 @@ In video tasks, intermediate frames are part of the solution rather than hidden 
 
 ## 📊 Key Findings
 
-> **Main conclusion:** Current video generation models, which lack sufficient pretraining for visual reasoning, **cannot really learn to reason** through post-training (i.e., acquire **generalizable reasoning**). Open-weights base video models score 0.00% pass@1 across `VideoGym-Test` (≤ 1.00% on `VBVR-Pro Bench`). Post-training brings clear gains *within familiar task patterns* (concentrated in the Single-Step Group), yet models collapse near 0% *beyond familiar task patterns* across tested backbones, datasets, and SFT or two-stage SFT + RLVR recipes, even when every constituent rule is solved at 100% accuracy on its own. Instead of really learning to reason, post-trained video models replay familiar solution patterns and remain **visual renderers** rather than **visual reasoners**.
+> **Main conclusion:** Current video generation models **cannot really learn to reason** through post-training (i.e., acquire **generalizable reasoning**). Open-weights base video models score 0.00% pass@1 across `VideoGym-Test` (≤ 1.00% on `VBVR-Pro Bench`). After SFT or two-stage SFT + RLVR post-training, models gain clearly *within familiar task patterns* (concentrated in the Single-Step Group), yet collapse near 0% *beyond familiar task patterns* across tested backbones and datasets, even when every constituent rule is solved at 100% accuracy on its own. Pretrained to turn scene descriptions into frames rather than work out unknown answers, post-trained video models replay familiar solution patterns and remain **visual renderers** rather than **visual reasoners**.
 
 All models generate pass@1 videos directly from (<i>I</i><sub>0</sub>, <i>P</i>) without external LLM/VLM prompt rewriting.
 

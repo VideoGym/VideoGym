@@ -143,15 +143,15 @@
               <div class="tldr-box">
                 <div class="tldr-label">Main Conclusion</div>
                 <p>
-                  Current video generation models, which lack sufficient pretraining for visual reasoning,
-                  <strong>cannot really learn to reason</strong> through post-training (i.e., acquire
-                  <strong>generalizable reasoning</strong>). Open-weights base video models start at
-                  <strong>0.00%</strong> on zero-shot visual reasoning. Post-training (SFT and RLVR) improves accuracy
-                  <em>within familiar task patterns</em> (mainly when marking one static answer on an unchanging scene),
-                  yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>, failing both to combine
-                  mastered rules and to solve unseen rules in the same categories. Instead of really learning to reason,
-                  post-trained models replay familiar solution templates and remain
-                  <strong>visual renderers</strong> rather than <strong>visual reasoners</strong>.
+                  Current video generation models <strong>cannot really learn to reason</strong> through post-training
+                  (i.e., acquire <strong>generalizable reasoning</strong>). Open-weights base video models start at
+                  <strong>0.00%</strong> on zero-shot visual reasoning; after SFT or RLVR post-training, accuracy
+                  improves <em>within familiar task patterns</em> (mainly when marking one static answer on an
+                  unchanging scene), yet collapses near <strong>0%</strong> <em>beyond familiar task patterns</em>,
+                  failing both to combine mastered rules and to solve unseen tasks. Pretrained to turn scene
+                  descriptions into frames rather than work out unknown answers, post-trained models replay familiar
+                  solution patterns and remain <strong>visual renderers</strong> rather than
+                  <strong>visual reasoners</strong>.
                 </p>
               </div>
 
